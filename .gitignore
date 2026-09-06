@@ -1,0 +1,22 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+reproduced/
+downloads/
+code/core/.vendor/gssc/
+*.edf
+*.zip
+*.pt
+*.pth
+
+# Public release excludes rendered figures; generate them locally.
+figures/
+*.png
+*.pdf
+*.jpg
+*.jpeg
+*.svg
+*.webp

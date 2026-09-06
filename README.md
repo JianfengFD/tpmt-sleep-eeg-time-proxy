@@ -38,11 +38,12 @@ in PowerShell; the commands in the full guide use macOS/Linux shell syntax.
 | `code/` | Physical-proxy inference/calibration, global-shell fitting, GSSC adapter, plotting and verification programs |
 | `data/core/` | Frozen feature grid, portable model coefficients, split assignments, stage predictions, six-LLM estimates and result tables |
 | `data/test_samples/` | Per-epoch trajectories and compact one-second EEG summaries for redraw |
-| `figures/test_samples/` | Archived test-example figures |
-| `evidence/` | Correlation figures and archived numerical checks |
+| `evidence/` | Textual numerical verification notes |
 
 Large raw EDF/ZIP files, GSSC neural weights, and proprietary LLMs are **not
-included**. The EEG display uses within-second summaries of the unfiltered
+included**. Figure files are also deliberately excluded from the public
+repository; the supplied plotting programs generate them locally. The EEG
+display uses within-second summaries of the unfiltered
 signal, not a lossless copy of raw EEG. The six-LLM durations are frozen,
 subjective screenplay-length estimates, not experimentally observed dream
 durations; no LLM API key is needed to replay this analysis.
