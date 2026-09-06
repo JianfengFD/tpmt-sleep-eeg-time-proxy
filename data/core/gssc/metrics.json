@@ -1,0 +1,745 @@
+{
+  "chosen_score": "consensus__trailing_mean_2",
+  "locked_threshold": 0.0554688852280378,
+  "production_rule": "official_argmax",
+  "tuned_gate_replaced_official_baseline": false,
+  "replacement_guard": {
+    "selected_loso_bacc": 0.8640350877192983,
+    "official_argmax_train_bacc": 0.8201754385964912,
+    "bootstrap": {
+      "repetitions_requested": 1000,
+      "repetitions_completed": 996,
+      "oob_repetitions_with_both_classes": 919,
+      "selected_candidate_frequency": {
+        "consensus__trailing_mean_2": 0.4006024096385542,
+        "c4_m1__trailing_mean_5": 0.26907630522088355,
+        "mean__trailing_mean_1": 0.12048192771084337,
+        "mean__trailing_mean_2": 0.08433734939759036,
+        "c4_m1__trailing_mean_1": 0.04919678714859438,
+        "consensus__trailing_mean_1": 0.04216867469879518,
+        "mean__trailing_mean_3": 0.028112449799196786,
+        "mean__trailing_mean_5": 0.006024096385542169
+      },
+      "original_candidate_threshold_quantiles_2p5_25_50_75_97p5": [
+        0.0554688852280378,
+        0.0554688852280378,
+        0.0554688852280378,
+        0.1095195487141609,
+        0.5
+      ],
+      "multi_selection_oob_delta_bacc_quantiles_2p5_50_97p5": [
+        -0.07142857142857151,
+        0.0,
+        0.40031249999999974
+      ],
+      "multi_selection_probability_oob_delta_positive": 0.28944504896626766,
+      "original_candidate_oob_delta_bacc_quantiles_2p5_50_97p5": [
+        -0.04185606060606066,
+        0.0,
+        0.40031249999999974
+      ],
+      "original_candidate_probability_oob_delta_positive": 0.30467899891186073
+    }
+  },
+  "official_argmax_baseline": {
+    "train": {
+      "n": 44,
+      "subjects": 13,
+      "rem_prevalence": 0.13636363636363635,
+      "confusion_truth_nonrem_rem_by_prediction_nonrem_rem": [
+        [
+          37,
+          1
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "accuracy": 0.9318181818181818,
+      "accuracy_wilson_95ci": [
+        0.8177495562977846,
+        0.9765406040926183
+      ],
+      "balanced_accuracy": 0.8201754385964912,
+      "rem_sensitivity": 0.6666666666666666,
+      "rem_sensitivity_wilson_95ci": [
+        0.299993315138392,
+        0.9032285888942195
+      ],
+      "nonrem_specificity": 0.9736842105263158,
+      "nonrem_specificity_wilson_95ci": [
+        0.8650512388404787,
+        0.9953394123142312
+      ],
+      "rem_precision": 0.8,
+      "rem_f1": 0.7272727272727273,
+      "average_precision": 0.8766233766233766,
+      "roc_auc": 0.9692982456140351,
+      "support_nonrem_rem": [
+        38,
+        6
+      ],
+      "subject_cluster_bootstrap": {
+        "accuracy": {
+          "percentile_95ci": [
+            0.8535670731707317,
+            1.0
+          ],
+          "valid_replicates": 2000
+        },
+        "balanced_accuracy": {
+          "percentile_95ci": [
+            0.5,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "rem_sensitivity": {
+          "percentile_95ci": [
+            0.0,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "nonrem_specificity": {
+          "percentile_95ci": [
+            0.9090909090909091,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "rem_precision": {
+          "percentile_95ci": [
+            0.0,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "rem_f1": {
+          "percentile_95ci": [
+            0.0,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "average_precision": {
+          "percentile_95ci": [
+            0.4444444444444444,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "roc_auc": {
+          "percentile_95ci": [
+            0.8735386971742936,
+            1.0
+          ],
+          "valid_replicates": 1998
+        }
+      }
+    },
+    "test": {
+      "n": 22,
+      "subjects": 6,
+      "rem_prevalence": 0.13636363636363635,
+      "confusion_truth_nonrem_rem_by_prediction_nonrem_rem": [
+        [
+          18,
+          1
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "accuracy": 0.9545454545454546,
+      "accuracy_wilson_95ci": [
+        0.7820195416134267,
+        0.991930572378736
+      ],
+      "balanced_accuracy": 0.9736842105263157,
+      "rem_sensitivity": 1.0,
+      "rem_sensitivity_wilson_95ci": [
+        0.4385029682449546,
+        1.0
+      ],
+      "nonrem_specificity": 0.9473684210526315,
+      "nonrem_specificity_wilson_95ci": [
+        0.753612688331012,
+        0.9906480059376995
+      ],
+      "rem_precision": 0.75,
+      "rem_f1": 0.8571428571428571,
+      "average_precision": 0.8055555555555556,
+      "roc_auc": 0.9649122807017545,
+      "support_nonrem_rem": [
+        19,
+        3
+      ],
+      "subject_cluster_bootstrap": {
+        "accuracy": {
+          "percentile_95ci": [
+            0.8636363636363636,
+            1.0
+          ],
+          "valid_replicates": 2000
+        },
+        "balanced_accuracy": {
+          "percentile_95ci": [
+            0.9166666666666667,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "rem_sensitivity": {
+          "percentile_95ci": [
+            1.0,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "nonrem_specificity": {
+          "percentile_95ci": [
+            0.8333333333333334,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "rem_precision": {
+          "percentile_95ci": [
+            0.5,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "rem_f1": {
+          "percentile_95ci": [
+            0.6666666666666666,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "average_precision": {
+          "percentile_95ci": [
+            0.8055555555555556,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "roc_auc": {
+          "percentile_95ci": [
+            0.9215686274509803,
+            1.0
+          ],
+          "valid_replicates": 1845
+        }
+      }
+    },
+    "all_66_endpoints_descriptive": {
+      "n": 66,
+      "subjects": 19,
+      "rem_prevalence": 0.13636363636363635,
+      "confusion_truth_nonrem_rem_by_prediction_nonrem_rem": [
+        [
+          55,
+          2
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "accuracy": 0.9393939393939394,
+      "accuracy_wilson_95ci": [
+        0.8542709132143579,
+        0.9761813851676816
+      ],
+      "balanced_accuracy": 0.8713450292397661,
+      "rem_sensitivity": 0.7777777777777778,
+      "rem_sensitivity_wilson_95ci": [
+        0.45258896910698887,
+        0.9367748928821533
+      ],
+      "nonrem_specificity": 0.9649122807017544,
+      "nonrem_specificity_wilson_95ci": [
+        0.8807921863237419,
+        0.9903243356550672
+      ],
+      "rem_precision": 0.7777777777777778,
+      "rem_f1": 0.7777777777777778,
+      "average_precision": 0.8550585217251885,
+      "roc_auc": 0.9688109161793372,
+      "support_nonrem_rem": [
+        57,
+        9
+      ],
+      "subject_cluster_bootstrap": {
+        "accuracy": {
+          "percentile_95ci": [
+            0.8857025761124121,
+            0.9857142857142858
+          ],
+          "valid_replicates": 2000
+        },
+        "balanced_accuracy": {
+          "percentile_95ci": [
+            0.6666666666666666,
+            0.9913793103448276
+          ],
+          "valid_replicates": 2000
+        },
+        "rem_sensitivity": {
+          "percentile_95ci": [
+            0.375,
+            1.0
+          ],
+          "valid_replicates": 2000
+        },
+        "nonrem_specificity": {
+          "percentile_95ci": [
+            0.9148936170212766,
+            1.0
+          ],
+          "valid_replicates": 2000
+        },
+        "rem_precision": {
+          "percentile_95ci": [
+            0.5,
+            1.0
+          ],
+          "valid_replicates": 2000
+        },
+        "rem_f1": {
+          "percentile_95ci": [
+            0.444047619047619,
+            0.9523809523809523
+          ],
+          "valid_replicates": 2000
+        },
+        "average_precision": {
+          "percentile_95ci": [
+            0.6475744047619046,
+            1.0
+          ],
+          "valid_replicates": 2000
+        },
+        "roc_auc": {
+          "percentile_95ci": [
+            0.9176393500948767,
+            1.0
+          ],
+          "valid_replicates": 2000
+        }
+      }
+    }
+  },
+  "experimental_tuned_candidate": {
+    "test": {
+      "n": 22,
+      "subjects": 6,
+      "rem_prevalence": 0.13636363636363635,
+      "confusion_truth_nonrem_rem_by_prediction_nonrem_rem": [
+        [
+          16,
+          3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "accuracy": 0.8636363636363636,
+      "accuracy_wilson_95ci": [
+        0.6666501283342828,
+        0.9525099628594474
+      ],
+      "balanced_accuracy": 0.9210526315789473,
+      "rem_sensitivity": 1.0,
+      "rem_sensitivity_wilson_95ci": [
+        0.4385029682449546,
+        1.0
+      ],
+      "nonrem_specificity": 0.8421052631578947,
+      "nonrem_specificity_wilson_95ci": [
+        0.6243452472967093,
+        0.9447952836146585
+      ],
+      "rem_precision": 0.5,
+      "rem_f1": 0.6666666666666666,
+      "average_precision": 0.8055555555555556,
+      "roc_auc": 0.9649122807017545,
+      "support_nonrem_rem": [
+        19,
+        3
+      ],
+      "subject_cluster_bootstrap": {
+        "accuracy": {
+          "percentile_95ci": [
+            0.6814393939393939,
+            1.0
+          ],
+          "valid_replicates": 2000
+        },
+        "balanced_accuracy": {
+          "percentile_95ci": [
+            0.7947058823529413,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "rem_sensitivity": {
+          "percentile_95ci": [
+            1.0,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "nonrem_specificity": {
+          "percentile_95ci": [
+            0.5894117647058824,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "rem_precision": {
+          "percentile_95ci": [
+            0.2,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "rem_f1": {
+          "percentile_95ci": [
+            0.3333333333333333,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "average_precision": {
+          "percentile_95ci": [
+            0.8055555555555556,
+            1.0
+          ],
+          "valid_replicates": 1845
+        },
+        "roc_auc": {
+          "percentile_95ci": [
+            0.9215686274509803,
+            1.0
+          ],
+          "valid_replicates": 1845
+        }
+      }
+    },
+    "train": {
+      "n": 44,
+      "subjects": 13,
+      "rem_prevalence": 0.13636363636363635,
+      "confusion_truth_nonrem_rem_by_prediction_nonrem_rem": [
+        [
+          34,
+          4
+        ],
+        [
+          0,
+          6
+        ]
+      ],
+      "accuracy": 0.9090909090909091,
+      "accuracy_wilson_95ci": [
+        0.7884076083340138,
+        0.9640778067726837
+      ],
+      "balanced_accuracy": 0.9473684210526316,
+      "rem_sensitivity": 1.0,
+      "rem_sensitivity_wilson_95ci": [
+        0.6096657120978346,
+        1.0
+      ],
+      "nonrem_specificity": 0.8947368421052632,
+      "nonrem_specificity_wilson_95ci": [
+        0.7586947827711269,
+        0.9582974265244647
+      ],
+      "rem_precision": 0.6,
+      "rem_f1": 0.75,
+      "average_precision": 0.8708333333333333,
+      "roc_auc": 0.9692982456140351,
+      "support_nonrem_rem": [
+        38,
+        6
+      ],
+      "subject_cluster_bootstrap": {
+        "accuracy": {
+          "percentile_95ci": [
+            0.7906976744186046,
+            1.0
+          ],
+          "valid_replicates": 2000
+        },
+        "balanced_accuracy": {
+          "percentile_95ci": [
+            0.875,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "rem_sensitivity": {
+          "percentile_95ci": [
+            1.0,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "nonrem_specificity": {
+          "percentile_95ci": [
+            0.75,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "rem_precision": {
+          "percentile_95ci": [
+            0.2857142857142857,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "rem_f1": {
+          "percentile_95ci": [
+            0.4444444444444444,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "average_precision": {
+          "percentile_95ci": [
+            0.3472222222222222,
+            1.0
+          ],
+          "valid_replicates": 1998
+        },
+        "roc_auc": {
+          "percentile_95ci": [
+            0.8503952991452991,
+            1.0
+          ],
+          "valid_replicates": 1998
+        }
+      }
+    }
+  },
+  "selection_rule": "candidate by training-subject LOSO balanced accuracy/F1; threshold refit on all training endpoints",
+  "train": {
+    "n": 44,
+    "subjects": 13,
+    "rem_prevalence": 0.13636363636363635,
+    "confusion_truth_nonrem_rem_by_prediction_nonrem_rem": [
+      [
+        37,
+        1
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "accuracy": 0.9318181818181818,
+    "accuracy_wilson_95ci": [
+      0.8177495562977846,
+      0.9765406040926183
+    ],
+    "balanced_accuracy": 0.8201754385964912,
+    "rem_sensitivity": 0.6666666666666666,
+    "rem_sensitivity_wilson_95ci": [
+      0.299993315138392,
+      0.9032285888942195
+    ],
+    "nonrem_specificity": 0.9736842105263158,
+    "nonrem_specificity_wilson_95ci": [
+      0.8650512388404787,
+      0.9953394123142312
+    ],
+    "rem_precision": 0.8,
+    "rem_f1": 0.7272727272727273,
+    "average_precision": 0.8766233766233766,
+    "roc_auc": 0.9692982456140351,
+    "support_nonrem_rem": [
+      38,
+      6
+    ],
+    "subject_cluster_bootstrap": {
+      "accuracy": {
+        "percentile_95ci": [
+          0.8535670731707317,
+          1.0
+        ],
+        "valid_replicates": 2000
+      },
+      "balanced_accuracy": {
+        "percentile_95ci": [
+          0.5,
+          1.0
+        ],
+        "valid_replicates": 1998
+      },
+      "rem_sensitivity": {
+        "percentile_95ci": [
+          0.0,
+          1.0
+        ],
+        "valid_replicates": 1998
+      },
+      "nonrem_specificity": {
+        "percentile_95ci": [
+          0.9090909090909091,
+          1.0
+        ],
+        "valid_replicates": 1998
+      },
+      "rem_precision": {
+        "percentile_95ci": [
+          0.0,
+          1.0
+        ],
+        "valid_replicates": 1998
+      },
+      "rem_f1": {
+        "percentile_95ci": [
+          0.0,
+          1.0
+        ],
+        "valid_replicates": 1998
+      },
+      "average_precision": {
+        "percentile_95ci": [
+          0.4444444444444444,
+          1.0
+        ],
+        "valid_replicates": 1998
+      },
+      "roc_auc": {
+        "percentile_95ci": [
+          0.8735386971742936,
+          1.0
+        ],
+        "valid_replicates": 1998
+      }
+    }
+  },
+  "held_out_test": {
+    "n": 22,
+    "subjects": 6,
+    "rem_prevalence": 0.13636363636363635,
+    "confusion_truth_nonrem_rem_by_prediction_nonrem_rem": [
+      [
+        18,
+        1
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "accuracy": 0.9545454545454546,
+    "accuracy_wilson_95ci": [
+      0.7820195416134267,
+      0.991930572378736
+    ],
+    "balanced_accuracy": 0.9736842105263157,
+    "rem_sensitivity": 1.0,
+    "rem_sensitivity_wilson_95ci": [
+      0.4385029682449546,
+      1.0
+    ],
+    "nonrem_specificity": 0.9473684210526315,
+    "nonrem_specificity_wilson_95ci": [
+      0.753612688331012,
+      0.9906480059376995
+    ],
+    "rem_precision": 0.75,
+    "rem_f1": 0.8571428571428571,
+    "average_precision": 0.8055555555555556,
+    "roc_auc": 0.9649122807017545,
+    "support_nonrem_rem": [
+      19,
+      3
+    ],
+    "subject_cluster_bootstrap": {
+      "accuracy": {
+        "percentile_95ci": [
+          0.8636363636363636,
+          1.0
+        ],
+        "valid_replicates": 2000
+      },
+      "balanced_accuracy": {
+        "percentile_95ci": [
+          0.9166666666666667,
+          1.0
+        ],
+        "valid_replicates": 1845
+      },
+      "rem_sensitivity": {
+        "percentile_95ci": [
+          1.0,
+          1.0
+        ],
+        "valid_replicates": 1845
+      },
+      "nonrem_specificity": {
+        "percentile_95ci": [
+          0.8333333333333334,
+          1.0
+        ],
+        "valid_replicates": 1845
+      },
+      "rem_precision": {
+        "percentile_95ci": [
+          0.5,
+          1.0
+        ],
+        "valid_replicates": 1845
+      },
+      "rem_f1": {
+        "percentile_95ci": [
+          0.6666666666666666,
+          1.0
+        ],
+        "valid_replicates": 1845
+      },
+      "average_precision": {
+        "percentile_95ci": [
+          0.8055555555555556,
+          1.0
+        ],
+        "valid_replicates": 1845
+      },
+      "roc_auc": {
+        "percentile_95ci": [
+          0.9215686274509803,
+          1.0
+        ],
+        "valid_replicates": 1845
+      }
+    }
+  },
+  "official_gssc_five_class_endpoint_accuracy": {
+    "test": 0.5909090909090909,
+    "train": 0.5909090909090909
+  },
+  "hard_label_reproduction": {
+    "records_checked": 66,
+    "mismatches": 0,
+    "exact_match": true
+  },
+  "pipeline_adapter_validation": {
+    "all_kumral_records": 66,
+    "all_kumral_epochs": 8581,
+    "g_fit_or_test_records_verified": 37,
+    "g_fit_or_test_epoch_keys_verified": 4724,
+    "missing_g_records": [],
+    "exact_locked_key_alignment": true
+  }
+}

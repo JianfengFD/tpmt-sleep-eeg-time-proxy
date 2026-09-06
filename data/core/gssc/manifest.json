@@ -1,0 +1,40 @@
+{
+  "model": "GSSC 0.0.9 official sig_net_v1.pt + gru_net_v1.pt",
+  "input": "complete end-aligned sequence; C3-TP10 and C4-TP9; 0.3-30 Hz; 85.333 Hz; continuous per-channel z-score",
+  "probability_semantics": "exp(log-softmax); official per-epoch loudest-vote permutation selected by largest maximum log-probability",
+  "manual_ground_truth_scope": "final 30-second endpoint only (66 labels); full-record hypnograms are unavailable",
+  "leakage_exclusions": [
+    "dream duration",
+    "dream report",
+    "filename",
+    "recording duration",
+    "subject identity"
+  ],
+  "stage_order": [
+    "W",
+    "N1",
+    "N2",
+    "N3",
+    "REM"
+  ],
+  "records": 66,
+  "epochs": 8581,
+  "archive": "/Users/lijf/Documents/work/CODEX_PRJS/TpMT_Sleep/data/Kumral_2023/Kumral et al., 2023.zip",
+  "labels": "/Users/lijf/Documents/work/CODEX_PRJS/TpMT_Sleep/outputs/self_similarity_fbar_v1/epoch_features_physical_grid.csv",
+  "chosen_score": "consensus__trailing_mean_2",
+  "locked_threshold": 0.0554688852280378,
+  "production_rule": "official_argmax",
+  "hard_label_reproduction": {
+    "records_checked": 66,
+    "mismatches": 0,
+    "exact_match": true
+  },
+  "pipeline_adapter_validation": {
+    "all_kumral_records": 66,
+    "all_kumral_epochs": 8581,
+    "g_fit_or_test_records_verified": 37,
+    "g_fit_or_test_epoch_keys_verified": 4724,
+    "missing_g_records": [],
+    "exact_locked_key_alignment": true
+  }
+}
