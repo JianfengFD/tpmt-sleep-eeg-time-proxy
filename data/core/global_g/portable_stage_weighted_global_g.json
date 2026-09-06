@@ -1,0 +1,134 @@
+{
+  "schema": "tpmt.stage_weighted_global_g.v1",
+  "description": "One global endpoint-fixed monotone g calibrated to stage-weighted dream time",
+  "formula": "T_dream = sum p(predicted_stage) * g(f_repeat_micro_v3) * duration_s",
+  "apparent_time_formula": "T_apparent = sum g(f_repeat_micro_v3) * duration_s",
+  "stage_weights": {
+    "W": 0.0,
+    "N1": 0.849,
+    "N2": 0.532,
+    "N3": 0.508,
+    "REM": 0.834
+  },
+  "stage_weight_profile": "literature_mean",
+  "stage_weights_fixed_during_g_optimization": true,
+  "physical_f_refit": false,
+  "stage_status": "exploratory hard prediction from pretrained GSSC v0.0.9; not a manual epoch-wise hypnogram",
+  "stage_used_as_g_input": false,
+  "stage_used_as_dream_weight": true,
+  "training_ids": [
+    6,
+    7,
+    8,
+    9,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25
+  ],
+  "heldout_ids": [
+    26,
+    27,
+    28,
+    30,
+    31,
+    32,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42
+  ],
+  "excluded_ids": {
+    "human_calibration_seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "training_too_short": [
+      10,
+      19
+    ],
+    "test_too_short": [
+      29,
+      33
+    ]
+  },
+  "selection": "minimum mean participant-grouped CV log-MSE on selected training only",
+  "test_used_for_selection_or_fitting": false,
+  "g_only_cv_conditional_on_frozen_upstream": true,
+  "upstream_stage_cross_fitted_within_g_cv": false,
+  "family": {
+    "key": "bernstein_degree_5",
+    "label": "Monotone Bernstein degree 5 (4 parameters)",
+    "kind": "bernstein",
+    "degree": 5,
+    "parameter_count": 4
+  },
+  "regularization": 0.0,
+  "parameters": [
+    0.03605627004647669,
+    0.03605627004647307,
+    0.03605627004647278,
+    0.036056270046469524
+  ],
+  "decoded_parameters": {
+    "degree": 5,
+    "interior_control_points": [
+      0.03605627004647669,
+      0.03605627004647307,
+      0.03605627004647278,
+      0.036056270046469524
+    ],
+    "control_points": [
+      0.0,
+      0.03605627004647669,
+      0.03605627004647307,
+      0.03605627004647278,
+      0.036056270046469524,
+      1.0
+    ]
+  },
+  "validation": {
+    "g_at_0": 0.0,
+    "g_at_1": 1.0,
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "minimum_step": 3.7934123480118376e-06,
+    "maximum_above_identity": 0.0,
+    "maximum_below_identity": 0.5040013973644397,
+    "endpoint_fixed": true,
+    "bounded": true,
+    "monotone": true,
+    "crosses_identity": false,
+    "never_above_identity": true
+  },
+  "inputs": {
+    "physical_f_column": "f_repeat_micro_v3",
+    "stage_column": "predicted_stage"
+  },
+  "source_files": {
+    "consensus_csv": "/Users/lijf/Documents/work/CODEX_PRJS/TpMT_Sleep/outputs/combined_fawake_v2/kappa_fit_v1/kumral_dream_duration_6llm_consensus.csv",
+    "consensus_sha256": "498d44c3728cf1290181efbe65cf9605d63c534cb06a1810fbe82962a2545d98",
+    "locked_physical_epochs": "/Users/lijf/Documents/work/CODEX_PRJS/TpMT_Sleep/outputs/dense_repeat_fawake_v3/rstar_micro_fit/all_epoch_trajectories.csv",
+    "locked_physical_epochs_sha256": "f1c386c097cbd4217e635136ff063814e83923d348806aeafd4002d94c3f86fc",
+    "exploratory_stage_epochs": "/Users/lijf/Documents/work/CODEX_PRJS/TpMT_Sleep/outputs/sleep_staging_kumral_rem_probability_v1/pipeline_stage_trajectories.csv.gz",
+    "exploratory_stage_epochs_sha256": "f0c2ebcc3fe3f86c94c9b21e1b84d0a4832d052d2bc86fb496b13326a28f3e23"
+  }
+}
