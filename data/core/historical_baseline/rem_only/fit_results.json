@@ -1,0 +1,252 @@
+{
+  "protocol": {
+    "schema": "tpmt.rem_only_global_g.v1",
+    "description": "One global endpoint-fixed monotone g calibrated to REM-gated dream time",
+    "formula": "T_dream = sum 1[predicted_stage == REM] * g(f_repeat_micro_v3) * duration_s",
+    "apparent_time_formula": "T_apparent = sum g(f_repeat_micro_v3) * duration_s",
+    "physical_f_refit": false,
+    "stage_status": "exploratory predicted hard label, not manual hypnogram",
+    "stage_used_as_g_input": false,
+    "stage_used_as_dream_mask": true,
+    "training_ids": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "heldout_ids": [
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42
+    ],
+    "excluded_ids": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "selection": "minimum mean participant-grouped CV log-MSE on training only",
+    "g_only_cv_conditional_on_frozen_upstream": true,
+    "upstream_stage_cross_fitted_within_g_cv": false,
+    "family": {
+      "key": "identity",
+      "label": "Identity",
+      "kind": "identity",
+      "degree": null,
+      "parameter_count": 0
+    },
+    "regularization": 0.0,
+    "parameters": [],
+    "decoded_parameters": {},
+    "validation": {
+      "g_at_0": 0.0,
+      "g_at_1": 1.0,
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "minimum_step": 4.999999999999449e-05,
+      "maximum_above_identity": 0.0,
+      "maximum_below_identity": -0.0,
+      "endpoint_fixed": true,
+      "bounded": true,
+      "monotone": true,
+      "crosses_identity": false,
+      "never_above_identity": true
+    },
+    "inputs": {
+      "physical_f_column": "f_repeat_micro_v3",
+      "stage_column": "predicted_stage",
+      "rem_label": "REM"
+    },
+    "source_files": {
+      "consensus_csv": "/Users/lijf/Documents/work/CODEX_PRJS/TpMT_Sleep/outputs/combined_fawake_v2/kappa_fit_v1/kumral_dream_duration_6llm_consensus.csv",
+      "consensus_sha256": "498d44c3728cf1290181efbe65cf9605d63c534cb06a1810fbe82962a2545d98",
+      "locked_physical_epochs": "/Users/lijf/Documents/work/CODEX_PRJS/TpMT_Sleep/outputs/dense_repeat_fawake_v3/rstar_micro_fit/all_epoch_trajectories.csv",
+      "locked_physical_epochs_sha256": "f1c386c097cbd4217e635136ff063814e83923d348806aeafd4002d94c3f86fc",
+      "exploratory_stage_epochs": "/Users/lijf/Documents/work/CODEX_PRJS/TpMT_Sleep/outputs/sleep_staging_kumral_rem_probability_v1/pipeline_stage_trajectories.csv.gz",
+      "exploratory_stage_epochs_sha256": "f0c2ebcc3fe3f86c94c9b21e1b84d0a4832d052d2bc86fb496b13326a28f3e23"
+    }
+  },
+  "selected_configuration": {
+    "config_key": "identity__lambda_0",
+    "objective": 5.482557517464656,
+    "data_loss": 5.482557517464656,
+    "identity_penalty": 0.0,
+    "selection_details": {
+      "selection_rule": "minimum mean participant-grouped CV loss on training only",
+      "chosen_config_key": "identity__lambda_0",
+      "chosen_mean_fold_loss": 5.267575083750439,
+      "chosen_fold_loss_se": 1.28926119200532
+    }
+  },
+  "epoch_join": {
+    "joined_epochs": 4724,
+    "records": 37,
+    "REM_epochs": 1228,
+    "non_REM_epochs": 3496,
+    "join_keys": [
+      "record_uid",
+      "epoch_index",
+      "start_s",
+      "end_s",
+      "duration_s"
+    ],
+    "exact_one_to_one": true
+  },
+  "feasibility": {
+    "training_records": 20,
+    "training_with_any_predicted_REM": 16,
+    "training_target_feasible": 13,
+    "test_records": 17,
+    "test_with_any_predicted_REM": 13,
+    "test_target_feasible": 11
+  },
+  "metrics": {
+    "dream_time": {
+      "training_nested_selection_oof": {
+        "n": 20,
+        "mae_s": 638.796928774727,
+        "rmse_s": 988.9025239908809,
+        "median_absolute_error_s": 186.53975883397567,
+        "log_mse": 6.219216932548358,
+        "r2_identity": -21.384782768529895,
+        "mean_target_s": 268.75,
+        "mean_prediction_s": 711.0143045891664,
+        "pearson_r": 0.32177275596563903,
+        "pearson_p": 0.1665185646900908,
+        "spearman_rho": 0.4512860474396784,
+        "spearman_p": 0.045797765066325755
+      },
+      "training_fixed_config_oof": {
+        "n": 20,
+        "mae_s": 533.4555363245324,
+        "rmse_s": 835.7876643065176,
+        "median_absolute_error_s": 186.53975883397567,
+        "log_mse": 5.9868709169667635,
+        "r2_identity": -14.989608390490787,
+        "mean_target_s": 268.75,
+        "mean_prediction_s": 601.7157704627015,
+        "pearson_r": 0.3026498239374789,
+        "pearson_p": 0.1946267338117143,
+        "spearman_rho": 0.4512860474396784,
+        "spearman_p": 0.045797765066325755
+      },
+      "training_final_model_in_sample": {
+        "n": 20,
+        "mae_s": 533.4555363245324,
+        "rmse_s": 835.7876643065176,
+        "median_absolute_error_s": 186.53975883397567,
+        "log_mse": 5.9868709169667635,
+        "r2_identity": -14.989608390490787,
+        "mean_target_s": 268.75,
+        "mean_prediction_s": 601.7157704627015,
+        "pearson_r": 0.3026498239374789,
+        "pearson_p": 0.1946267338117143,
+        "spearman_rho": 0.4512860474396784,
+        "spearman_p": 0.045797765066325755
+      },
+      "heldout_test": {
+        "n": 17,
+        "mae_s": 607.2660036537895,
+        "rmse_s": 742.539306898201,
+        "median_absolute_error_s": 671.5108757145724,
+        "log_mse": 7.359226748186867,
+        "r2_identity": -6.434391319696794,
+        "mean_target_s": 343.8235294117647,
+        "mean_prediction_s": 710.6251756048533,
+        "pearson_r": 0.3522320093542429,
+        "pearson_p": 0.16556737433178745,
+        "spearman_rho": 0.4453407901690707,
+        "spearman_p": 0.07322323736525799
+      }
+    },
+    "apparent_time_vs_dream_estimate": {
+      "training_nested_selection_oof": {
+        "n": 20,
+        "mae_s": 1811.5271226193067,
+        "rmse_s": 2410.128397784795,
+        "median_absolute_error_s": 1156.9451489243365,
+        "log_mse": 4.865099950557163,
+        "r2_identity": -131.96161245922968,
+        "mean_target_s": 268.75,
+        "mean_prediction_s": 2028.4283186090925,
+        "pearson_r": 0.2917858834899662,
+        "pearson_p": 0.21193355772611444,
+        "spearman_rho": 0.3574116888385389,
+        "spearman_p": 0.12184064515988179
+      },
+      "training_fixed_config_oof": {
+        "n": 20,
+        "mae_s": 1442.1578612993026,
+        "rmse_s": 1899.9247574552044,
+        "median_absolute_error_s": 1156.9451489243365,
+        "log_mse": 4.1078484365481645,
+        "r2_identity": -81.62637836302044,
+        "mean_target_s": 268.75,
+        "mean_prediction_s": 1659.0590572890883,
+        "pearson_r": 0.308581715561878,
+        "pearson_p": 0.18558883226126155,
+        "spearman_rho": 0.4100828850884288,
+        "spearman_p": 0.07252599567616154
+      },
+      "training_final_model_in_sample": {
+        "n": 20,
+        "mae_s": 1442.1578612993026,
+        "rmse_s": 1899.9247574552044,
+        "median_absolute_error_s": 1156.9451489243365,
+        "log_mse": 4.1078484365481645,
+        "r2_identity": -81.62637836302044,
+        "mean_target_s": 268.75,
+        "mean_prediction_s": 1659.0590572890883,
+        "pearson_r": 0.308581715561878,
+        "pearson_p": 0.18558883226126155,
+        "spearman_rho": 0.4100828850884288,
+        "spearman_p": 0.07252599567616154
+      },
+      "heldout_test": {
+        "n": 17,
+        "mae_s": 1505.2779387278667,
+        "rmse_s": 1781.8560316524054,
+        "median_absolute_error_s": 1654.2290645883095,
+        "log_mse": 4.3918369193650895,
+        "r2_identity": -41.810642270236755,
+        "mean_target_s": 343.8235294117647,
+        "mean_prediction_s": 1746.6210269460348,
+        "pearson_r": 0.06994411489032074,
+        "pearson_p": 0.7896641264847067,
+        "spearman_rho": 0.11663617077939839,
+        "spearman_p": 0.6557417880166942
+      }
+    }
+  }
+}
