@@ -62,20 +62,6 @@ grid**. It also provides single-EDF physical-proxy inference and raw Kumral
 GSSC inference; it does not claim to automate reconstruction of the complete
 historical feature-grid curation or to reproduce fresh LLM judgments exactly.
 
-## Interpretation and evaluation scope
-
-The final dream calibration retains 18 training and 15 held-out records after
-the declared exclusions. Held-out Pearson correlations are approximately
-0.218 for stage-weighted dream time and 0.196 for total phenomenological time
-against report-based duration estimates. These limited associations should
-not be described as accurate dream-duration prediction.
-
-Only the final 30-second epoch in each of 66 Kumral records has a manual stage
-label in the inputs used here. The held-out endpoint audit has 22 labels:
-five-class accuracy is 13/22 (59.1%); REM/non-REM accuracy is 21/22 (95.5%).
-This does not validate the full predicted hypnogram, and the held-out audit
-contains no wake endpoint and only three REM endpoints.
-
 ## License and attribution
 
 Project-authored code is offered under the [MIT License](LICENSE).
