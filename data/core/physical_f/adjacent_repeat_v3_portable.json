@@ -1,0 +1,2143 @@
+{
+  "format": "adjacent_repeat_logit_shift_portable_v3",
+  "definition": "P*=row q75 of P(H=0.5,tau=0.08/0.10); R is fold-training Zhang non-W/W logistic calibration to 0.05/0.95; f=sigmoid(logit(Fs)+0.25*(2R-1))",
+  "base_model": {
+    "format": "dense_repeat_fawake_portable_v2",
+    "definition": "Fs=logistic(fixed self-similarity construction; robust default is the median across the nine predeclared gamma values of a fixed long/short persistence ratio); f=Fs+alpha*Fs*(1-Fs)*(2R-1); primary R is tanh-calibrated return prominence",
+    "Fs_candidate_policy": "robust_gamma_median",
+    "selected_Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+    "selected_Fs_candidate_spec": {
+      "kind": "gamma_median_persistence_ratio",
+      "long_delta_s": 9.5,
+      "short_delta_s": 0.75,
+      "gamma_grid": [
+        0.03,
+        0.05,
+        0.08,
+        0.12,
+        0.18,
+        0.25,
+        0.35,
+        0.5,
+        0.75
+      ],
+      "gamma_pairs": [
+        {
+          "gamma": 0.03,
+          "long_column": "structure_S_d9p5_g0p03",
+          "short_column": "structure_S_d0p75_g0p03"
+        },
+        {
+          "gamma": 0.05,
+          "long_column": "structure_S_d9p5_g0p05",
+          "short_column": "structure_S_d0p75_g0p05"
+        },
+        {
+          "gamma": 0.08,
+          "long_column": "structure_S_d9p5_g0p08",
+          "short_column": "structure_S_d0p75_g0p08"
+        },
+        {
+          "gamma": 0.12,
+          "long_column": "structure_S_d9p5_g0p12",
+          "short_column": "structure_S_d0p75_g0p12"
+        },
+        {
+          "gamma": 0.18,
+          "long_column": "structure_S_d9p5_g0p18",
+          "short_column": "structure_S_d0p75_g0p18"
+        },
+        {
+          "gamma": 0.25,
+          "long_column": "structure_S_d9p5_g0p25",
+          "short_column": "structure_S_d0p75_g0p25"
+        },
+        {
+          "gamma": 0.35,
+          "long_column": "structure_S_d9p5_g0p35",
+          "short_column": "structure_S_d0p75_g0p35"
+        },
+        {
+          "gamma": 0.5,
+          "long_column": "structure_S_d9p5_g0p5",
+          "short_column": "structure_S_d0p75_g0p5"
+        },
+        {
+          "gamma": 0.75,
+          "long_column": "structure_S_d9p5_g0p75",
+          "short_column": "structure_S_d0p75_g0p75"
+        }
+      ],
+      "ratio_epsilon": 0.02,
+      "formula": "median_gamma[(S(long,gamma)+0.02)/(S(short,gamma)+0.02)]"
+    },
+    "selected_S_column": null,
+    "selected_repeat_mode": "return_prominence",
+    "selected_repeat_column": "recurrence_P_h0p5_tau0p08",
+    "selected_adjacent_repeat_column": "recurrence_P_h0p5_tau0p08",
+    "alpha": 1.0,
+    "n3_anchor": 0.5975855130784709,
+    "wake_anchor": 1.0348050914876692,
+    "endpoint_epsilon": 0.05,
+    "Fs_calibration": {
+      "kind": "smooth_logistic_N3_W"
+    },
+    "repeat_calibration": {
+      "kind": "smooth_tanh_N3_W",
+      "n3_anchor": -0.0967770665884018,
+      "wake_anchor": 0.0018054470419883,
+      "endpoint_epsilon": 0.05,
+      "raw_orientation": "W_greater_than_N3"
+    },
+    "selection_rule": "phase 1 selects one fixed physical Fs candidate by the mean objective across 3 deterministic participant-grouped CV repeats; phase 2 selects one return-prominence R and alpha on that locked OOF Fs; 0.005*alpha penalizes unnecessary correction; Zhang W-vs-N1 has the largest weight",
+    "selection_cv": {
+      "kind": "Repeated StratifiedGroupKFold",
+      "n_splits": 4,
+      "n_repeats": 3,
+      "random_states": [
+        20260904,
+        20268823,
+        20276742
+      ],
+      "seed_step": 7919,
+      "shuffle": true,
+      "group": "subject_group",
+      "folds": [
+        {
+          "fold": 1,
+          "fit_groups": [
+            "Kumral:Sub-001",
+            "Kumral:Sub-003",
+            "Kumral:Sub-007",
+            "Kumral:Sub-009",
+            "Kumral:Sub-011",
+            "Kumral:Sub-014",
+            "Kumral:Sub-015",
+            "Kumral:Sub-017",
+            "Kumral:Sub-019",
+            "Zhang:107",
+            "Zhang:183",
+            "Zhang:228",
+            "Zhang:245",
+            "Zhang:26",
+            "Zhang:337",
+            "Zhang:347",
+            "Zhang:348",
+            "Zhang:384",
+            "Zhang:388",
+            "Zhang:411",
+            "Zhang:452",
+            "Zhang:455",
+            "Zhang:535"
+          ],
+          "validation_groups": [
+            "Kumral:Sub-012",
+            "Kumral:Sub-013",
+            "Kumral:Sub-016",
+            "Kumral:Sub-018",
+            "Zhang:10",
+            "Zhang:185",
+            "Zhang:309",
+            "Zhang:374"
+          ]
+        },
+        {
+          "fold": 2,
+          "fit_groups": [
+            "Kumral:Sub-001",
+            "Kumral:Sub-007",
+            "Kumral:Sub-011",
+            "Kumral:Sub-012",
+            "Kumral:Sub-013",
+            "Kumral:Sub-016",
+            "Kumral:Sub-017",
+            "Kumral:Sub-018",
+            "Kumral:Sub-019",
+            "Zhang:10",
+            "Zhang:183",
+            "Zhang:185",
+            "Zhang:245",
+            "Zhang:26",
+            "Zhang:309",
+            "Zhang:337",
+            "Zhang:347",
+            "Zhang:374",
+            "Zhang:384",
+            "Zhang:388",
+            "Zhang:452",
+            "Zhang:455",
+            "Zhang:535"
+          ],
+          "validation_groups": [
+            "Kumral:Sub-003",
+            "Kumral:Sub-009",
+            "Kumral:Sub-014",
+            "Kumral:Sub-015",
+            "Zhang:107",
+            "Zhang:228",
+            "Zhang:348",
+            "Zhang:411"
+          ]
+        },
+        {
+          "fold": 3,
+          "fit_groups": [
+            "Kumral:Sub-003",
+            "Kumral:Sub-007",
+            "Kumral:Sub-009",
+            "Kumral:Sub-012",
+            "Kumral:Sub-013",
+            "Kumral:Sub-014",
+            "Kumral:Sub-015",
+            "Kumral:Sub-016",
+            "Kumral:Sub-017",
+            "Kumral:Sub-018",
+            "Kumral:Sub-019",
+            "Zhang:10",
+            "Zhang:107",
+            "Zhang:183",
+            "Zhang:185",
+            "Zhang:228",
+            "Zhang:245",
+            "Zhang:309",
+            "Zhang:347",
+            "Zhang:348",
+            "Zhang:374",
+            "Zhang:384",
+            "Zhang:411",
+            "Zhang:452"
+          ],
+          "validation_groups": [
+            "Kumral:Sub-001",
+            "Kumral:Sub-011",
+            "Zhang:26",
+            "Zhang:337",
+            "Zhang:388",
+            "Zhang:455",
+            "Zhang:535"
+          ]
+        },
+        {
+          "fold": 4,
+          "fit_groups": [
+            "Kumral:Sub-001",
+            "Kumral:Sub-003",
+            "Kumral:Sub-009",
+            "Kumral:Sub-011",
+            "Kumral:Sub-012",
+            "Kumral:Sub-013",
+            "Kumral:Sub-014",
+            "Kumral:Sub-015",
+            "Kumral:Sub-016",
+            "Kumral:Sub-018",
+            "Zhang:10",
+            "Zhang:107",
+            "Zhang:185",
+            "Zhang:228",
+            "Zhang:26",
+            "Zhang:309",
+            "Zhang:337",
+            "Zhang:348",
+            "Zhang:374",
+            "Zhang:388",
+            "Zhang:411",
+            "Zhang:455",
+            "Zhang:535"
+          ],
+          "validation_groups": [
+            "Kumral:Sub-007",
+            "Kumral:Sub-017",
+            "Kumral:Sub-019",
+            "Zhang:183",
+            "Zhang:245",
+            "Zhang:347",
+            "Zhang:384",
+            "Zhang:452"
+          ]
+        }
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "random_state": 20260904,
+          "folds": [
+            {
+              "fold": 1,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-017",
+                "Kumral:Sub-019",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-016",
+                "Kumral:Sub-018",
+                "Zhang:10",
+                "Zhang:185",
+                "Zhang:309",
+                "Zhang:374"
+              ]
+            },
+            {
+              "fold": 2,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-007",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:452",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-009",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Zhang:107",
+                "Zhang:228",
+                "Zhang:348",
+                "Zhang:411"
+              ]
+            },
+            {
+              "fold": 3,
+              "fit_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:309",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:411",
+                "Zhang:452"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-011",
+                "Zhang:26",
+                "Zhang:337",
+                "Zhang:388",
+                "Zhang:455",
+                "Zhang:535"
+              ]
+            },
+            {
+              "fold": 4,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-018",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-007",
+                "Kumral:Sub-017",
+                "Kumral:Sub-019",
+                "Zhang:183",
+                "Zhang:245",
+                "Zhang:347",
+                "Zhang:384",
+                "Zhang:452"
+              ]
+            }
+          ]
+        },
+        {
+          "repeat": 2,
+          "random_state": 20268823,
+          "folds": [
+            {
+              "fold": 1,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:185",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-012",
+                "Kumral:Sub-015",
+                "Zhang:183",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:388",
+                "Zhang:455"
+              ]
+            },
+            {
+              "fold": 2,
+              "fit_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-012",
+                "Kumral:Sub-015",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:455"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-011",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-016",
+                "Kumral:Sub-019",
+                "Zhang:384",
+                "Zhang:535"
+              ]
+            },
+            {
+              "fold": 3,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:309",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-017",
+                "Zhang:10",
+                "Zhang:185",
+                "Zhang:26",
+                "Zhang:337"
+              ]
+            },
+            {
+              "fold": 4,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:337",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-018",
+                "Zhang:107",
+                "Zhang:309",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:411",
+                "Zhang:452"
+              ]
+            }
+          ]
+        },
+        {
+          "repeat": 3,
+          "random_state": 20276742,
+          "folds": [
+            {
+              "fold": 1,
+              "fit_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:183",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:309",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:455"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-007",
+                "Kumral:Sub-016",
+                "Zhang:107",
+                "Zhang:185",
+                "Zhang:26",
+                "Zhang:337",
+                "Zhang:535"
+              ]
+            },
+            {
+              "fold": 2,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-007",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-016",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:374",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-009",
+                "Kumral:Sub-015",
+                "Kumral:Sub-017",
+                "Zhang:228",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:384",
+                "Zhang:388"
+              ]
+            },
+            {
+              "fold": 3,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:26",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:452",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:245",
+                "Zhang:309",
+                "Zhang:411"
+              ]
+            },
+            {
+              "fold": 4,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-018",
+                "Zhang:183",
+                "Zhang:374",
+                "Zhang:452",
+                "Zhang:455"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "selected_Fs_metrics_oof": {
+      "auc_Zhang_W_vs_N1": 0.5423218467714955,
+      "auc_Zhang_W_vs_N2": 0.7355666429080542,
+      "auc_Zhang_W_vs_N3": 0.8743169398907105,
+      "auc_Zhang_W_vs_REM": 0.6721311475409836,
+      "auc_Zhang_W_vs_rest": 0.662152530292231,
+      "auc_W_vs_N1": 0.5423218467714955,
+      "auc_W_vs_N2": 0.7355666429080542,
+      "auc_W_vs_N3": 0.8743169398907105,
+      "auc_W_vs_REM": 0.6721311475409836,
+      "auc_W_vs_rest": 0.662152530292231,
+      "pooled_auc_W_vs_N1": 0.5422208475100525,
+      "pooled_auc_W_vs_N2": 0.7284096670610106,
+      "pooled_auc_W_vs_N3": 0.8706739526411658,
+      "pooled_auc_W_vs_REM": 0.6600142551674981,
+      "pooled_auc_W_vs_rest": 0.672581516843812,
+      "stage_medians": {
+        "W": 0.9543504105449124,
+        "N1": 0.9359342380292133,
+        "N2": 0.42333761098598544,
+        "N3": 0.042959316001638735,
+        "REM": 0.781637402786984
+      },
+      "Zhang_stage_medians": {
+        "W": 0.9543504105449124,
+        "N1": 0.9342887206503038,
+        "N2": 0.42333761098598544,
+        "N3": 0.01910665921917878,
+        "REM": 0.7692452819544823
+      },
+      "W_median": 0.9543504105449124,
+      "N1_median": 0.9359342380292133,
+      "N2_median": 0.42333761098598544,
+      "N3_median": 0.042959316001638735,
+      "REM_median": 0.781637402786984,
+      "Zhang_W_minus_N1_median": 0.02006168989460866,
+      "W_minus_N1_median": 0.02006168989460866,
+      "endpoint_mean_absolute_error_to_1_0": 0.044304452728363156,
+      "endpoint_score": 0.9556955472716369,
+      "nonW_fraction_above_0p90": 0.3241758241758242,
+      "Zhang_nonW_fraction_above_0p90": 0.34782608695652173,
+      "observed_min": 0.0007270316141621012,
+      "observed_max": 0.9999997672480809,
+      "bounded_unit_interval": true,
+      "selection_objective": 0.6267481912169574,
+      "mean_OOF_prediction_objective": 0.62559825712933,
+      "repeat_selection_objectives": [
+        0.6275978608994729,
+        0.6313577896249503,
+        0.621288923126449
+      ],
+      "repeat_selection_objective_mean": 0.6267481912169574,
+      "repeat_selection_objective_sd": 0.004154272665437333,
+      "Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+      "Fs_candidate_spec": {
+        "kind": "gamma_median_persistence_ratio",
+        "long_delta_s": 9.5,
+        "short_delta_s": 0.75,
+        "gamma_grid": [
+          0.03,
+          0.05,
+          0.08,
+          0.12,
+          0.18,
+          0.25,
+          0.35,
+          0.5,
+          0.75
+        ],
+        "gamma_pairs": [
+          {
+            "gamma": 0.03,
+            "long_column": "structure_S_d9p5_g0p03",
+            "short_column": "structure_S_d0p75_g0p03"
+          },
+          {
+            "gamma": 0.05,
+            "long_column": "structure_S_d9p5_g0p05",
+            "short_column": "structure_S_d0p75_g0p05"
+          },
+          {
+            "gamma": 0.08,
+            "long_column": "structure_S_d9p5_g0p08",
+            "short_column": "structure_S_d0p75_g0p08"
+          },
+          {
+            "gamma": 0.12,
+            "long_column": "structure_S_d9p5_g0p12",
+            "short_column": "structure_S_d0p75_g0p12"
+          },
+          {
+            "gamma": 0.18,
+            "long_column": "structure_S_d9p5_g0p18",
+            "short_column": "structure_S_d0p75_g0p18"
+          },
+          {
+            "gamma": 0.25,
+            "long_column": "structure_S_d9p5_g0p25",
+            "short_column": "structure_S_d0p75_g0p25"
+          },
+          {
+            "gamma": 0.35,
+            "long_column": "structure_S_d9p5_g0p35",
+            "short_column": "structure_S_d0p75_g0p35"
+          },
+          {
+            "gamma": 0.5,
+            "long_column": "structure_S_d9p5_g0p5",
+            "short_column": "structure_S_d0p75_g0p5"
+          },
+          {
+            "gamma": 0.75,
+            "long_column": "structure_S_d9p5_g0p75",
+            "short_column": "structure_S_d0p75_g0p75"
+          }
+        ],
+        "ratio_epsilon": 0.02,
+        "formula": "median_gamma[(S(long,gamma)+0.02)/(S(short,gamma)+0.02)]"
+      },
+      "candidate_grid_index": 16,
+      "fold_anchors": [
+        {
+          "fold": 1,
+          "n3_anchor": 0.5979361060931689,
+          "wake_anchor": 1.0348050914876692,
+          "raw_orientation": "W_greater_than_N3"
+        },
+        {
+          "fold": 2,
+          "n3_anchor": 0.7133674374323458,
+          "wake_anchor": 1.0912502238477009,
+          "raw_orientation": "W_greater_than_N3"
+        },
+        {
+          "fold": 3,
+          "n3_anchor": 0.5767982210201095,
+          "wake_anchor": 0.9523969534050178,
+          "raw_orientation": "W_greater_than_N3"
+        },
+        {
+          "fold": 4,
+          "n3_anchor": 0.5975855130784709,
+          "wake_anchor": 1.0465549348230911,
+          "raw_orientation": "W_greater_than_N3"
+        }
+      ],
+      "repeat_fold_anchors": [
+        {
+          "repeat": 1,
+          "fold_anchors": [
+            {
+              "fold": 1,
+              "n3_anchor": 0.5979361060931689,
+              "wake_anchor": 1.0348050914876692,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 2,
+              "n3_anchor": 0.7133674374323458,
+              "wake_anchor": 1.0912502238477009,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 3,
+              "n3_anchor": 0.5767982210201095,
+              "wake_anchor": 0.9523969534050178,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 4,
+              "n3_anchor": 0.5975855130784709,
+              "wake_anchor": 1.0465549348230911,
+              "raw_orientation": "W_greater_than_N3"
+            }
+          ]
+        },
+        {
+          "repeat": 2,
+          "fold_anchors": [
+            {
+              "fold": 1,
+              "n3_anchor": 0.5975855130784709,
+              "wake_anchor": 0.9946807529851787,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 2,
+              "n3_anchor": 0.5509612819419615,
+              "wake_anchor": 1.0406800131553802,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 3,
+              "n3_anchor": 0.5982866991078669,
+              "wake_anchor": 0.9910052475508166,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 4,
+              "n3_anchor": 0.5975855130784709,
+              "wake_anchor": 1.0797672672672671,
+              "raw_orientation": "W_greater_than_N3"
+            }
+          ]
+        },
+        {
+          "repeat": 3,
+          "fold_anchors": [
+            {
+              "fold": 1,
+              "n3_anchor": 0.5767982210201095,
+              "wake_anchor": 1.006772505264401,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 2,
+              "n3_anchor": 0.8160302307080349,
+              "wake_anchor": 1.0912502238477009,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 3,
+              "n3_anchor": 0.5614509843873366,
+              "wake_anchor": 1.0334336342360415,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 4,
+              "n3_anchor": 0.5767982210201095,
+              "wake_anchor": 1.0406800131553802,
+              "raw_orientation": "W_greater_than_N3"
+            }
+          ]
+        }
+      ],
+      "calibration": "smooth logistic; N3->0.05, W->0.95; deterministic 3-repeat grouped CV"
+    },
+    "selected_S_metrics_oof": {
+      "auc_Zhang_W_vs_N1": 0.5423218467714955,
+      "auc_Zhang_W_vs_N2": 0.7355666429080542,
+      "auc_Zhang_W_vs_N3": 0.8743169398907105,
+      "auc_Zhang_W_vs_REM": 0.6721311475409836,
+      "auc_Zhang_W_vs_rest": 0.662152530292231,
+      "auc_W_vs_N1": 0.5423218467714955,
+      "auc_W_vs_N2": 0.7355666429080542,
+      "auc_W_vs_N3": 0.8743169398907105,
+      "auc_W_vs_REM": 0.6721311475409836,
+      "auc_W_vs_rest": 0.662152530292231,
+      "pooled_auc_W_vs_N1": 0.5422208475100525,
+      "pooled_auc_W_vs_N2": 0.7284096670610106,
+      "pooled_auc_W_vs_N3": 0.8706739526411658,
+      "pooled_auc_W_vs_REM": 0.6600142551674981,
+      "pooled_auc_W_vs_rest": 0.672581516843812,
+      "stage_medians": {
+        "W": 0.9543504105449124,
+        "N1": 0.9359342380292133,
+        "N2": 0.42333761098598544,
+        "N3": 0.042959316001638735,
+        "REM": 0.781637402786984
+      },
+      "Zhang_stage_medians": {
+        "W": 0.9543504105449124,
+        "N1": 0.9342887206503038,
+        "N2": 0.42333761098598544,
+        "N3": 0.01910665921917878,
+        "REM": 0.7692452819544823
+      },
+      "W_median": 0.9543504105449124,
+      "N1_median": 0.9359342380292133,
+      "N2_median": 0.42333761098598544,
+      "N3_median": 0.042959316001638735,
+      "REM_median": 0.781637402786984,
+      "Zhang_W_minus_N1_median": 0.02006168989460866,
+      "W_minus_N1_median": 0.02006168989460866,
+      "endpoint_mean_absolute_error_to_1_0": 0.044304452728363156,
+      "endpoint_score": 0.9556955472716369,
+      "nonW_fraction_above_0p90": 0.3241758241758242,
+      "Zhang_nonW_fraction_above_0p90": 0.34782608695652173,
+      "observed_min": 0.0007270316141621012,
+      "observed_max": 0.9999997672480809,
+      "bounded_unit_interval": true,
+      "selection_objective": 0.6267481912169574,
+      "mean_OOF_prediction_objective": 0.62559825712933,
+      "repeat_selection_objectives": [
+        0.6275978608994729,
+        0.6313577896249503,
+        0.621288923126449
+      ],
+      "repeat_selection_objective_mean": 0.6267481912169574,
+      "repeat_selection_objective_sd": 0.004154272665437333,
+      "Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+      "Fs_candidate_spec": {
+        "kind": "gamma_median_persistence_ratio",
+        "long_delta_s": 9.5,
+        "short_delta_s": 0.75,
+        "gamma_grid": [
+          0.03,
+          0.05,
+          0.08,
+          0.12,
+          0.18,
+          0.25,
+          0.35,
+          0.5,
+          0.75
+        ],
+        "gamma_pairs": [
+          {
+            "gamma": 0.03,
+            "long_column": "structure_S_d9p5_g0p03",
+            "short_column": "structure_S_d0p75_g0p03"
+          },
+          {
+            "gamma": 0.05,
+            "long_column": "structure_S_d9p5_g0p05",
+            "short_column": "structure_S_d0p75_g0p05"
+          },
+          {
+            "gamma": 0.08,
+            "long_column": "structure_S_d9p5_g0p08",
+            "short_column": "structure_S_d0p75_g0p08"
+          },
+          {
+            "gamma": 0.12,
+            "long_column": "structure_S_d9p5_g0p12",
+            "short_column": "structure_S_d0p75_g0p12"
+          },
+          {
+            "gamma": 0.18,
+            "long_column": "structure_S_d9p5_g0p18",
+            "short_column": "structure_S_d0p75_g0p18"
+          },
+          {
+            "gamma": 0.25,
+            "long_column": "structure_S_d9p5_g0p25",
+            "short_column": "structure_S_d0p75_g0p25"
+          },
+          {
+            "gamma": 0.35,
+            "long_column": "structure_S_d9p5_g0p35",
+            "short_column": "structure_S_d0p75_g0p35"
+          },
+          {
+            "gamma": 0.5,
+            "long_column": "structure_S_d9p5_g0p5",
+            "short_column": "structure_S_d0p75_g0p5"
+          },
+          {
+            "gamma": 0.75,
+            "long_column": "structure_S_d9p5_g0p75",
+            "short_column": "structure_S_d0p75_g0p75"
+          }
+        ],
+        "ratio_epsilon": 0.02,
+        "formula": "median_gamma[(S(long,gamma)+0.02)/(S(short,gamma)+0.02)]"
+      },
+      "candidate_grid_index": 16,
+      "fold_anchors": [
+        {
+          "fold": 1,
+          "n3_anchor": 0.5979361060931689,
+          "wake_anchor": 1.0348050914876692,
+          "raw_orientation": "W_greater_than_N3"
+        },
+        {
+          "fold": 2,
+          "n3_anchor": 0.7133674374323458,
+          "wake_anchor": 1.0912502238477009,
+          "raw_orientation": "W_greater_than_N3"
+        },
+        {
+          "fold": 3,
+          "n3_anchor": 0.5767982210201095,
+          "wake_anchor": 0.9523969534050178,
+          "raw_orientation": "W_greater_than_N3"
+        },
+        {
+          "fold": 4,
+          "n3_anchor": 0.5975855130784709,
+          "wake_anchor": 1.0465549348230911,
+          "raw_orientation": "W_greater_than_N3"
+        }
+      ],
+      "repeat_fold_anchors": [
+        {
+          "repeat": 1,
+          "fold_anchors": [
+            {
+              "fold": 1,
+              "n3_anchor": 0.5979361060931689,
+              "wake_anchor": 1.0348050914876692,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 2,
+              "n3_anchor": 0.7133674374323458,
+              "wake_anchor": 1.0912502238477009,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 3,
+              "n3_anchor": 0.5767982210201095,
+              "wake_anchor": 0.9523969534050178,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 4,
+              "n3_anchor": 0.5975855130784709,
+              "wake_anchor": 1.0465549348230911,
+              "raw_orientation": "W_greater_than_N3"
+            }
+          ]
+        },
+        {
+          "repeat": 2,
+          "fold_anchors": [
+            {
+              "fold": 1,
+              "n3_anchor": 0.5975855130784709,
+              "wake_anchor": 0.9946807529851787,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 2,
+              "n3_anchor": 0.5509612819419615,
+              "wake_anchor": 1.0406800131553802,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 3,
+              "n3_anchor": 0.5982866991078669,
+              "wake_anchor": 0.9910052475508166,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 4,
+              "n3_anchor": 0.5975855130784709,
+              "wake_anchor": 1.0797672672672671,
+              "raw_orientation": "W_greater_than_N3"
+            }
+          ]
+        },
+        {
+          "repeat": 3,
+          "fold_anchors": [
+            {
+              "fold": 1,
+              "n3_anchor": 0.5767982210201095,
+              "wake_anchor": 1.006772505264401,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 2,
+              "n3_anchor": 0.8160302307080349,
+              "wake_anchor": 1.0912502238477009,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 3,
+              "n3_anchor": 0.5614509843873366,
+              "wake_anchor": 1.0334336342360415,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 4,
+              "n3_anchor": 0.5767982210201095,
+              "wake_anchor": 1.0406800131553802,
+              "raw_orientation": "W_greater_than_N3"
+            }
+          ]
+        }
+      ],
+      "calibration": "smooth logistic; N3->0.05, W->0.95; deterministic 3-repeat grouped CV"
+    },
+    "selected_dense_repeat_metrics_oof": {
+      "auc_Zhang_W_vs_N1": 0.5784543325526932,
+      "auc_Zhang_W_vs_N2": 0.7685911142789261,
+      "auc_Zhang_W_vs_N3": 0.8852459016393442,
+      "auc_Zhang_W_vs_REM": 0.6856316297010607,
+      "auc_Zhang_W_vs_rest": 0.6933951057258256,
+      "auc_W_vs_N1": 0.5784543325526932,
+      "auc_W_vs_N2": 0.7685911142789261,
+      "auc_W_vs_N3": 0.8852459016393442,
+      "auc_W_vs_REM": 0.6856316297010607,
+      "auc_W_vs_rest": 0.6933951057258256,
+      "pooled_auc_W_vs_N1": 0.5768635941849676,
+      "pooled_auc_W_vs_N2": 0.7561264154132161,
+      "pooled_auc_W_vs_N3": 0.8706739526411658,
+      "pooled_auc_W_vs_REM": 0.6771204561653599,
+      "pooled_auc_W_vs_rest": 0.6996036750135111,
+      "stage_medians": {
+        "W": 0.9901890350498168,
+        "N1": 0.9249085712591466,
+        "N2": 0.2777686060462753,
+        "N3": 0.027969094805372866,
+        "REM": 0.6630395254358445
+      },
+      "Zhang_stage_medians": {
+        "W": 0.9901890350498168,
+        "N1": 0.9249085712591466,
+        "N2": 0.2348034059968524,
+        "N3": 0.027969094805372866,
+        "REM": 0.6630395254358445
+      },
+      "W_median": 0.9901890350498168,
+      "N1_median": 0.9249085712591466,
+      "N2_median": 0.2777686060462753,
+      "N3_median": 0.027969094805372866,
+      "REM_median": 0.6630395254358445,
+      "Zhang_W_minus_N1_median": 0.0652804637906702,
+      "W_minus_N1_median": 0.0652804637906702,
+      "endpoint_mean_absolute_error_to_1_0": 0.018890029877778027,
+      "endpoint_score": 0.981109970122222,
+      "nonW_fraction_above_0p90": 0.2857142857142857,
+      "Zhang_nonW_fraction_above_0p90": 0.3188405797101449,
+      "observed_min": 1.0222176989437698e-05,
+      "observed_max": 0.9999999999999458,
+      "bounded_unit_interval": true,
+      "selection_objective": 0.6564715389686744,
+      "Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+      "repeat_mode": "return_prominence",
+      "repeat_column": "recurrence_P_h0p5_tau0p08",
+      "adjacent_repeat_column": "recurrence_P_h0p5_tau0p08",
+      "repeat_calibration": "fold-training N3/W tanh to 0.05/0.95; averaged over 3 deterministic grouped-CV repeats",
+      "repeat_fold_anchors": [
+        {
+          "repeat": 1,
+          "fold_anchors": [
+            {
+              "fold": 1,
+              "n3_anchor": -0.10494615882635111,
+              "wake_anchor": 0.0018054470419883,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 2,
+              "n3_anchor": -0.09138041734695435,
+              "wake_anchor": 0.0095416661351919,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 3,
+              "n3_anchor": -0.1088810861110687,
+              "wake_anchor": -0.0610252246260643,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 4,
+              "n3_anchor": -0.0967770665884018,
+              "wake_anchor": 0.0018054470419883,
+              "raw_orientation": "W_greater_than_N3"
+            }
+          ]
+        },
+        {
+          "repeat": 2,
+          "fold_anchors": [
+            {
+              "fold": 1,
+              "n3_anchor": -0.0889072120189666,
+              "wake_anchor": 0.008550301194190951,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 2,
+              "n3_anchor": -0.17332247644662854,
+              "wake_anchor": -0.0170509964227676,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 3,
+              "n3_anchor": -0.0967770665884018,
+              "wake_anchor": -0.0170509964227676,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 4,
+              "n3_anchor": -0.0967770665884018,
+              "wake_anchor": 0.0018054470419883,
+              "raw_orientation": "W_greater_than_N3"
+            }
+          ]
+        },
+        {
+          "repeat": 3,
+          "fold_anchors": [
+            {
+              "fold": 1,
+              "n3_anchor": -0.1088810861110687,
+              "wake_anchor": -0.05831240117549895,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 2,
+              "n3_anchor": -0.0967770665884018,
+              "wake_anchor": 0.01365842297673225,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 3,
+              "n3_anchor": -0.12950789183378214,
+              "wake_anchor": -0.0294917374849319,
+              "raw_orientation": "W_greater_than_N3"
+            },
+            {
+              "fold": 4,
+              "n3_anchor": -0.0928421393036842,
+              "wake_anchor": 0.0037010870873927498,
+              "raw_orientation": "W_greater_than_N3"
+            }
+          ]
+        }
+      ],
+      "alpha": 1.0,
+      "maximum_possible_absolute_correction": 0.25,
+      "observed_mean_absolute_correction_oof": 0.0866095578364713,
+      "observed_maximum_absolute_correction_oof": 0.24982064279098917,
+      "alpha_complexity_penalty": 0.005,
+      "regularized_selection_objective": 0.6514715389686744
+    },
+    "constraints": {
+      "Fs_family": "default: 20 fixed long/short persistence ratios, each marginalized by the median over all nine predeclared gamma values",
+      "Fs_candidate_policy": "robust_gamma_median",
+      "legacy_288_grid_role": "sensitivity only",
+      "inner_cv_repeats": 3,
+      "inner_cv_repeat_seed_step": 7919,
+      "only_one_repeat_column": true,
+      "primary_repeat_mode": "return_prominence",
+      "return_prominence_direction": "higher P must imply higher R and f",
+      "block_fraction_role": "sensitivity only",
+      "alpha_interval": [
+        0.0,
+        1.0
+      ],
+      "unit_interval_proof": "x^2 <= f <= 2x-x^2 for x=Fs in [0,1]",
+      "mathematical_endpoints_fixed": true,
+      "hard_anchor_clipping": false,
+      "dream_duration_used": false
+    },
+    "label_usage": {
+      "manual_final_stage": "grid selection and fold-local N3/W anchors",
+      "subject_group": "participant-grouped cross-validation",
+      "dataset": "within-Zhang primary W-vs-N1 audit",
+      "dream_duration": "not read",
+      "dream_report": "not read"
+    }
+  },
+  "repeat_columns": [
+    "recurrence_P_h0p5_tau0p08",
+    "recurrence_P_h0p5_tau0p1"
+  ],
+  "context_half_window_s": 0.5,
+  "tau_grid_s": [
+    0.08,
+    0.1
+  ],
+  "row_quantile": 0.75,
+  "quantile_method": "NumPy linear",
+  "beta": 0.25,
+  "nonwake_anchor": -0.09650388825684782,
+  "wake_anchor": 0.018992106430232473,
+  "calibration_epsilon": 0.05,
+  "selection_rule": "P*, q=0.75, logistic direction, and beta=0.25 are fixed design choices; only the underlying robust Fs definition is training-selected by the v2 repeated participant-grouped procedure",
+  "selection_cv": {
+    "kind": "Repeated StratifiedGroupKFold",
+    "n_splits": 4,
+    "n_repeats": 3,
+    "random_states": [
+      20260904,
+      20268823,
+      20276742
+    ],
+    "seed_step": 7919,
+    "shuffle": true,
+    "group": "subject_group",
+    "folds": [
+      {
+        "fold": 1,
+        "fit_groups": [
+          "Kumral:Sub-001",
+          "Kumral:Sub-003",
+          "Kumral:Sub-007",
+          "Kumral:Sub-009",
+          "Kumral:Sub-011",
+          "Kumral:Sub-014",
+          "Kumral:Sub-015",
+          "Kumral:Sub-017",
+          "Kumral:Sub-019",
+          "Zhang:107",
+          "Zhang:183",
+          "Zhang:228",
+          "Zhang:245",
+          "Zhang:26",
+          "Zhang:337",
+          "Zhang:347",
+          "Zhang:348",
+          "Zhang:384",
+          "Zhang:388",
+          "Zhang:411",
+          "Zhang:452",
+          "Zhang:455",
+          "Zhang:535"
+        ],
+        "validation_groups": [
+          "Kumral:Sub-012",
+          "Kumral:Sub-013",
+          "Kumral:Sub-016",
+          "Kumral:Sub-018",
+          "Zhang:10",
+          "Zhang:185",
+          "Zhang:309",
+          "Zhang:374"
+        ]
+      },
+      {
+        "fold": 2,
+        "fit_groups": [
+          "Kumral:Sub-001",
+          "Kumral:Sub-007",
+          "Kumral:Sub-011",
+          "Kumral:Sub-012",
+          "Kumral:Sub-013",
+          "Kumral:Sub-016",
+          "Kumral:Sub-017",
+          "Kumral:Sub-018",
+          "Kumral:Sub-019",
+          "Zhang:10",
+          "Zhang:183",
+          "Zhang:185",
+          "Zhang:245",
+          "Zhang:26",
+          "Zhang:309",
+          "Zhang:337",
+          "Zhang:347",
+          "Zhang:374",
+          "Zhang:384",
+          "Zhang:388",
+          "Zhang:452",
+          "Zhang:455",
+          "Zhang:535"
+        ],
+        "validation_groups": [
+          "Kumral:Sub-003",
+          "Kumral:Sub-009",
+          "Kumral:Sub-014",
+          "Kumral:Sub-015",
+          "Zhang:107",
+          "Zhang:228",
+          "Zhang:348",
+          "Zhang:411"
+        ]
+      },
+      {
+        "fold": 3,
+        "fit_groups": [
+          "Kumral:Sub-003",
+          "Kumral:Sub-007",
+          "Kumral:Sub-009",
+          "Kumral:Sub-012",
+          "Kumral:Sub-013",
+          "Kumral:Sub-014",
+          "Kumral:Sub-015",
+          "Kumral:Sub-016",
+          "Kumral:Sub-017",
+          "Kumral:Sub-018",
+          "Kumral:Sub-019",
+          "Zhang:10",
+          "Zhang:107",
+          "Zhang:183",
+          "Zhang:185",
+          "Zhang:228",
+          "Zhang:245",
+          "Zhang:309",
+          "Zhang:347",
+          "Zhang:348",
+          "Zhang:374",
+          "Zhang:384",
+          "Zhang:411",
+          "Zhang:452"
+        ],
+        "validation_groups": [
+          "Kumral:Sub-001",
+          "Kumral:Sub-011",
+          "Zhang:26",
+          "Zhang:337",
+          "Zhang:388",
+          "Zhang:455",
+          "Zhang:535"
+        ]
+      },
+      {
+        "fold": 4,
+        "fit_groups": [
+          "Kumral:Sub-001",
+          "Kumral:Sub-003",
+          "Kumral:Sub-009",
+          "Kumral:Sub-011",
+          "Kumral:Sub-012",
+          "Kumral:Sub-013",
+          "Kumral:Sub-014",
+          "Kumral:Sub-015",
+          "Kumral:Sub-016",
+          "Kumral:Sub-018",
+          "Zhang:10",
+          "Zhang:107",
+          "Zhang:185",
+          "Zhang:228",
+          "Zhang:26",
+          "Zhang:309",
+          "Zhang:337",
+          "Zhang:348",
+          "Zhang:374",
+          "Zhang:388",
+          "Zhang:411",
+          "Zhang:455",
+          "Zhang:535"
+        ],
+        "validation_groups": [
+          "Kumral:Sub-007",
+          "Kumral:Sub-017",
+          "Kumral:Sub-019",
+          "Zhang:183",
+          "Zhang:245",
+          "Zhang:347",
+          "Zhang:384",
+          "Zhang:452"
+        ]
+      }
+    ],
+    "repeats": [
+      {
+        "repeat": 1,
+        "random_state": 20260904,
+        "folds": [
+          {
+            "fold": 1,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-003",
+              "Kumral:Sub-007",
+              "Kumral:Sub-009",
+              "Kumral:Sub-011",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Kumral:Sub-017",
+              "Kumral:Sub-019",
+              "Zhang:107",
+              "Zhang:183",
+              "Zhang:228",
+              "Zhang:245",
+              "Zhang:26",
+              "Zhang:337",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:384",
+              "Zhang:388",
+              "Zhang:411",
+              "Zhang:452",
+              "Zhang:455",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-016",
+              "Kumral:Sub-018",
+              "Zhang:10",
+              "Zhang:185",
+              "Zhang:309",
+              "Zhang:374"
+            ]
+          },
+          {
+            "fold": 2,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-007",
+              "Kumral:Sub-011",
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-016",
+              "Kumral:Sub-017",
+              "Kumral:Sub-018",
+              "Kumral:Sub-019",
+              "Zhang:10",
+              "Zhang:183",
+              "Zhang:185",
+              "Zhang:245",
+              "Zhang:26",
+              "Zhang:309",
+              "Zhang:337",
+              "Zhang:347",
+              "Zhang:374",
+              "Zhang:384",
+              "Zhang:388",
+              "Zhang:452",
+              "Zhang:455",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-003",
+              "Kumral:Sub-009",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Zhang:107",
+              "Zhang:228",
+              "Zhang:348",
+              "Zhang:411"
+            ]
+          },
+          {
+            "fold": 3,
+            "fit_groups": [
+              "Kumral:Sub-003",
+              "Kumral:Sub-007",
+              "Kumral:Sub-009",
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Kumral:Sub-016",
+              "Kumral:Sub-017",
+              "Kumral:Sub-018",
+              "Kumral:Sub-019",
+              "Zhang:10",
+              "Zhang:107",
+              "Zhang:183",
+              "Zhang:185",
+              "Zhang:228",
+              "Zhang:245",
+              "Zhang:309",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:374",
+              "Zhang:384",
+              "Zhang:411",
+              "Zhang:452"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-011",
+              "Zhang:26",
+              "Zhang:337",
+              "Zhang:388",
+              "Zhang:455",
+              "Zhang:535"
+            ]
+          },
+          {
+            "fold": 4,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-003",
+              "Kumral:Sub-009",
+              "Kumral:Sub-011",
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Kumral:Sub-016",
+              "Kumral:Sub-018",
+              "Zhang:10",
+              "Zhang:107",
+              "Zhang:185",
+              "Zhang:228",
+              "Zhang:26",
+              "Zhang:309",
+              "Zhang:337",
+              "Zhang:348",
+              "Zhang:374",
+              "Zhang:388",
+              "Zhang:411",
+              "Zhang:455",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-007",
+              "Kumral:Sub-017",
+              "Kumral:Sub-019",
+              "Zhang:183",
+              "Zhang:245",
+              "Zhang:347",
+              "Zhang:384",
+              "Zhang:452"
+            ]
+          }
+        ]
+      },
+      {
+        "repeat": 2,
+        "random_state": 20268823,
+        "folds": [
+          {
+            "fold": 1,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-007",
+              "Kumral:Sub-009",
+              "Kumral:Sub-011",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-016",
+              "Kumral:Sub-017",
+              "Kumral:Sub-018",
+              "Kumral:Sub-019",
+              "Zhang:10",
+              "Zhang:107",
+              "Zhang:185",
+              "Zhang:26",
+              "Zhang:309",
+              "Zhang:337",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:374",
+              "Zhang:384",
+              "Zhang:411",
+              "Zhang:452",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-003",
+              "Kumral:Sub-012",
+              "Kumral:Sub-015",
+              "Zhang:183",
+              "Zhang:228",
+              "Zhang:245",
+              "Zhang:388",
+              "Zhang:455"
+            ]
+          },
+          {
+            "fold": 2,
+            "fit_groups": [
+              "Kumral:Sub-003",
+              "Kumral:Sub-007",
+              "Kumral:Sub-009",
+              "Kumral:Sub-012",
+              "Kumral:Sub-015",
+              "Kumral:Sub-017",
+              "Kumral:Sub-018",
+              "Zhang:10",
+              "Zhang:107",
+              "Zhang:183",
+              "Zhang:185",
+              "Zhang:228",
+              "Zhang:245",
+              "Zhang:26",
+              "Zhang:309",
+              "Zhang:337",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:374",
+              "Zhang:388",
+              "Zhang:411",
+              "Zhang:452",
+              "Zhang:455"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-011",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-016",
+              "Kumral:Sub-019",
+              "Zhang:384",
+              "Zhang:535"
+            ]
+          },
+          {
+            "fold": 3,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-003",
+              "Kumral:Sub-011",
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Kumral:Sub-016",
+              "Kumral:Sub-018",
+              "Kumral:Sub-019",
+              "Zhang:107",
+              "Zhang:183",
+              "Zhang:228",
+              "Zhang:245",
+              "Zhang:309",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:374",
+              "Zhang:384",
+              "Zhang:388",
+              "Zhang:411",
+              "Zhang:452",
+              "Zhang:455",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-007",
+              "Kumral:Sub-009",
+              "Kumral:Sub-017",
+              "Zhang:10",
+              "Zhang:185",
+              "Zhang:26",
+              "Zhang:337"
+            ]
+          },
+          {
+            "fold": 4,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-003",
+              "Kumral:Sub-007",
+              "Kumral:Sub-009",
+              "Kumral:Sub-011",
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Kumral:Sub-016",
+              "Kumral:Sub-017",
+              "Kumral:Sub-019",
+              "Zhang:10",
+              "Zhang:183",
+              "Zhang:185",
+              "Zhang:228",
+              "Zhang:245",
+              "Zhang:26",
+              "Zhang:337",
+              "Zhang:384",
+              "Zhang:388",
+              "Zhang:455",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-018",
+              "Zhang:107",
+              "Zhang:309",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:374",
+              "Zhang:411",
+              "Zhang:452"
+            ]
+          }
+        ]
+      },
+      {
+        "repeat": 3,
+        "random_state": 20276742,
+        "folds": [
+          {
+            "fold": 1,
+            "fit_groups": [
+              "Kumral:Sub-003",
+              "Kumral:Sub-009",
+              "Kumral:Sub-011",
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Kumral:Sub-017",
+              "Kumral:Sub-018",
+              "Kumral:Sub-019",
+              "Zhang:10",
+              "Zhang:183",
+              "Zhang:228",
+              "Zhang:245",
+              "Zhang:309",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:374",
+              "Zhang:384",
+              "Zhang:388",
+              "Zhang:411",
+              "Zhang:452",
+              "Zhang:455"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-007",
+              "Kumral:Sub-016",
+              "Zhang:107",
+              "Zhang:185",
+              "Zhang:26",
+              "Zhang:337",
+              "Zhang:535"
+            ]
+          },
+          {
+            "fold": 2,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-007",
+              "Kumral:Sub-011",
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-016",
+              "Kumral:Sub-018",
+              "Kumral:Sub-019",
+              "Zhang:10",
+              "Zhang:107",
+              "Zhang:183",
+              "Zhang:185",
+              "Zhang:245",
+              "Zhang:26",
+              "Zhang:309",
+              "Zhang:337",
+              "Zhang:374",
+              "Zhang:411",
+              "Zhang:452",
+              "Zhang:455",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-003",
+              "Kumral:Sub-009",
+              "Kumral:Sub-015",
+              "Kumral:Sub-017",
+              "Zhang:228",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:384",
+              "Zhang:388"
+            ]
+          },
+          {
+            "fold": 3,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-003",
+              "Kumral:Sub-007",
+              "Kumral:Sub-009",
+              "Kumral:Sub-011",
+              "Kumral:Sub-012",
+              "Kumral:Sub-015",
+              "Kumral:Sub-016",
+              "Kumral:Sub-017",
+              "Kumral:Sub-018",
+              "Zhang:107",
+              "Zhang:183",
+              "Zhang:185",
+              "Zhang:228",
+              "Zhang:26",
+              "Zhang:337",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:374",
+              "Zhang:384",
+              "Zhang:388",
+              "Zhang:452",
+              "Zhang:455",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-019",
+              "Zhang:10",
+              "Zhang:245",
+              "Zhang:309",
+              "Zhang:411"
+            ]
+          },
+          {
+            "fold": 4,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-003",
+              "Kumral:Sub-007",
+              "Kumral:Sub-009",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Kumral:Sub-016",
+              "Kumral:Sub-017",
+              "Kumral:Sub-019",
+              "Zhang:10",
+              "Zhang:107",
+              "Zhang:185",
+              "Zhang:228",
+              "Zhang:245",
+              "Zhang:26",
+              "Zhang:309",
+              "Zhang:337",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:384",
+              "Zhang:388",
+              "Zhang:411",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-011",
+              "Kumral:Sub-012",
+              "Kumral:Sub-018",
+              "Zhang:183",
+              "Zhang:374",
+              "Zhang:452",
+              "Zhang:455"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "crossfit_pure_Fs_metrics": {
+    "auc_Zhang_W_vs_N1": 0.5423218467714955,
+    "auc_Zhang_W_vs_N2": 0.7355666429080542,
+    "auc_Zhang_W_vs_N3": 0.8743169398907105,
+    "auc_Zhang_W_vs_REM": 0.6721311475409836,
+    "auc_Zhang_W_vs_rest": 0.662152530292231,
+    "auc_W_vs_N1": 0.5423218467714955,
+    "auc_W_vs_N2": 0.7355666429080542,
+    "auc_W_vs_N3": 0.8743169398907105,
+    "auc_W_vs_REM": 0.6721311475409836,
+    "auc_W_vs_rest": 0.662152530292231,
+    "pooled_auc_W_vs_N1": 0.5422208475100525,
+    "pooled_auc_W_vs_N2": 0.7284096670610106,
+    "pooled_auc_W_vs_N3": 0.8706739526411658,
+    "pooled_auc_W_vs_REM": 0.6600142551674981,
+    "pooled_auc_W_vs_rest": 0.672581516843812,
+    "stage_medians": {
+      "W": 0.9543504105449124,
+      "N1": 0.9359342380292133,
+      "N2": 0.42333761098598544,
+      "N3": 0.042959316001638735,
+      "REM": 0.781637402786984
+    },
+    "Zhang_stage_medians": {
+      "W": 0.9543504105449124,
+      "N1": 0.9342887206503038,
+      "N2": 0.42333761098598544,
+      "N3": 0.01910665921917878,
+      "REM": 0.7692452819544823
+    },
+    "W_median": 0.9543504105449124,
+    "N1_median": 0.9359342380292133,
+    "N2_median": 0.42333761098598544,
+    "N3_median": 0.042959316001638735,
+    "REM_median": 0.781637402786984,
+    "Zhang_W_minus_N1_median": 0.02006168989460866,
+    "W_minus_N1_median": 0.02006168989460866,
+    "endpoint_mean_absolute_error_to_1_0": 0.044304452728363156,
+    "endpoint_score": 0.9556955472716369,
+    "nonW_fraction_above_0p90": 0.3241758241758242,
+    "Zhang_nonW_fraction_above_0p90": 0.34782608695652173,
+    "observed_min": 0.0007270316141621012,
+    "observed_max": 0.9999997672480809,
+    "bounded_unit_interval": true,
+    "selection_objective": 0.62559825712933
+  },
+  "crossfit_v3_metrics": {
+    "auc_Zhang_W_vs_N1": 0.5463365674138508,
+    "auc_Zhang_W_vs_N2": 0.7431693989071039,
+    "auc_Zhang_W_vs_N3": 0.8797814207650274,
+    "auc_Zhang_W_vs_REM": 0.674059787849566,
+    "auc_Zhang_W_vs_rest": 0.667735804229033,
+    "auc_W_vs_N1": 0.5463365674138508,
+    "auc_W_vs_N2": 0.7431693989071039,
+    "auc_W_vs_N3": 0.8797814207650274,
+    "auc_W_vs_REM": 0.674059787849566,
+    "auc_W_vs_rest": 0.667735804229033,
+    "pooled_auc_W_vs_N1": 0.5453139498917414,
+    "pooled_auc_W_vs_N2": 0.7350008450228157,
+    "pooled_auc_W_vs_N3": 0.8797814207650273,
+    "pooled_auc_W_vs_REM": 0.6621525302922309,
+    "pooled_auc_W_vs_rest": 0.6777157268960549,
+    "stage_medians": {
+      "W": 0.956352215873946,
+      "N1": 0.9253311063653183,
+      "N2": 0.42333634235539336,
+      "N3": 0.03886981240698122,
+      "REM": 0.7364840148158778
+    },
+    "Zhang_stage_medians": {
+      "W": 0.956352215873946,
+      "N1": 0.928341137921257,
+      "N2": 0.42333634235539336,
+      "N3": 0.01756759257620937,
+      "REM": 0.7357568598110964
+    },
+    "W_median": 0.956352215873946,
+    "N1_median": 0.9253311063653183,
+    "N2_median": 0.42333634235539336,
+    "N3_median": 0.03886981240698122,
+    "REM_median": 0.7364840148158778,
+    "Zhang_W_minus_N1_median": 0.02801107795268898,
+    "W_minus_N1_median": 0.02801107795268898,
+    "endpoint_mean_absolute_error_to_1_0": 0.0412587982665176,
+    "endpoint_score": 0.9587412017334824,
+    "nonW_fraction_above_0p90": 0.3021978021978022,
+    "Zhang_nonW_fraction_above_0p90": 0.3188405797101449,
+    "observed_min": 0.0005756017592260489,
+    "observed_max": 0.9999998187326138,
+    "bounded_unit_interval": true,
+    "selection_objective": 0.6310851480575124
+  },
+  "constraints": {
+    "maximum_absolute_logit_shift": 0.25,
+    "exact_mathematical_endpoints_fixed": true,
+    "repeat_calibration_scope": "Zhang W versus all Zhang non-W",
+    "repeat_physical_direction": "higher P* must imply higher R; no sign flip",
+    "dream_information_used": false,
+    "test_labels_used_for_fit": false,
+    "beta_selected_by_nested_cv": false
+  }
+}

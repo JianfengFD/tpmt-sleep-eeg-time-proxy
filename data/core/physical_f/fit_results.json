@@ -1,0 +1,3906 @@
+{
+  "analysis": "fixed R* symmetric-logit micro-correction of self-similarity F_S",
+  "scope": "initial f only; no g, dream report, or dream duration",
+  "input_audit": {
+    "input": "/Users/lijf/Documents/work/CODEX_PRJS/TpMT_Sleep/outputs/dense_repeat_fawake_v2/epoch_features_S_RP_grid.csv",
+    "rows": 9197,
+    "records": 374,
+    "subjects": 47,
+    "train_rows": 6157,
+    "test_rows": 3040,
+    "train_final_labelled_epochs": 243,
+    "test_final_labelled_epochs": 131,
+    "train_subjects": 31,
+    "test_subjects": 16,
+    "subject_disjoint": true,
+    "record_disjoint": true,
+    "available_S_columns": 108,
+    "available_adjacent_repeat_columns": 160,
+    "available_return_prominence_columns": 20,
+    "train_final_stage_counts": {
+      "N2": 97,
+      "W": 61,
+      "N1": 53,
+      "REM": 23,
+      "N3": 9
+    },
+    "test_final_stage_counts": {
+      "N2": 50,
+      "W": 35,
+      "N1": 29,
+      "REM": 12,
+      "N3": 5
+    }
+  },
+  "training_protocol": {
+    "estimate": "training_nested_subject_group_oof",
+    "outer_splitter": "StratifiedGroupKFold by subject_group",
+    "outer_splits_requested": 5,
+    "entire_Fs_model_refitted_per_outer_fold": true,
+    "Rstar_calibration_refitted_per_outer_fold": true,
+    "Rstar_definition_and_beta_fixed": true,
+    "crossfit_is_preregistered_unbiased_evidence": false,
+    "reason": "R* design was developed after inspection of this study"
+  },
+  "test_protocol": {
+    "name": "repeated_held_aside_diagnostic_test",
+    "untouched_confirmatory_test": false,
+    "reason": "held-aside subjects were inspected in prior project iterations"
+  },
+  "final_model": {
+    "format": "adjacent_repeat_logit_shift_portable_v3",
+    "definition": "P*=row q75 of P(H=0.5,tau=0.08/0.10); R is fold-training Zhang non-W/W logistic calibration to 0.05/0.95; f=sigmoid(logit(Fs)+0.25*(2R-1))",
+    "base_model": {
+      "format": "dense_repeat_fawake_portable_v2",
+      "definition": "Fs=logistic(fixed self-similarity construction; robust default is the median across the nine predeclared gamma values of a fixed long/short persistence ratio); f=Fs+alpha*Fs*(1-Fs)*(2R-1); primary R is tanh-calibrated return prominence",
+      "Fs_candidate_policy": "robust_gamma_median",
+      "selected_Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+      "selected_Fs_candidate_spec": {
+        "kind": "gamma_median_persistence_ratio",
+        "long_delta_s": 9.5,
+        "short_delta_s": 0.75,
+        "gamma_grid": [
+          0.03,
+          0.05,
+          0.08,
+          0.12,
+          0.18,
+          0.25,
+          0.35,
+          0.5,
+          0.75
+        ],
+        "gamma_pairs": [
+          {
+            "gamma": 0.03,
+            "long_column": "structure_S_d9p5_g0p03",
+            "short_column": "structure_S_d0p75_g0p03"
+          },
+          {
+            "gamma": 0.05,
+            "long_column": "structure_S_d9p5_g0p05",
+            "short_column": "structure_S_d0p75_g0p05"
+          },
+          {
+            "gamma": 0.08,
+            "long_column": "structure_S_d9p5_g0p08",
+            "short_column": "structure_S_d0p75_g0p08"
+          },
+          {
+            "gamma": 0.12,
+            "long_column": "structure_S_d9p5_g0p12",
+            "short_column": "structure_S_d0p75_g0p12"
+          },
+          {
+            "gamma": 0.18,
+            "long_column": "structure_S_d9p5_g0p18",
+            "short_column": "structure_S_d0p75_g0p18"
+          },
+          {
+            "gamma": 0.25,
+            "long_column": "structure_S_d9p5_g0p25",
+            "short_column": "structure_S_d0p75_g0p25"
+          },
+          {
+            "gamma": 0.35,
+            "long_column": "structure_S_d9p5_g0p35",
+            "short_column": "structure_S_d0p75_g0p35"
+          },
+          {
+            "gamma": 0.5,
+            "long_column": "structure_S_d9p5_g0p5",
+            "short_column": "structure_S_d0p75_g0p5"
+          },
+          {
+            "gamma": 0.75,
+            "long_column": "structure_S_d9p5_g0p75",
+            "short_column": "structure_S_d0p75_g0p75"
+          }
+        ],
+        "ratio_epsilon": 0.02,
+        "formula": "median_gamma[(S(long,gamma)+0.02)/(S(short,gamma)+0.02)]"
+      },
+      "selected_S_column": null,
+      "selected_repeat_mode": "return_prominence",
+      "selected_repeat_column": "recurrence_P_h0p5_tau0p08",
+      "selected_adjacent_repeat_column": "recurrence_P_h0p5_tau0p08",
+      "alpha": 1.0,
+      "n3_anchor": 0.5975855130784709,
+      "wake_anchor": 1.0348050914876692,
+      "endpoint_epsilon": 0.05,
+      "Fs_calibration": {
+        "kind": "smooth_logistic_N3_W"
+      },
+      "repeat_calibration": {
+        "kind": "smooth_tanh_N3_W",
+        "n3_anchor": -0.0967770665884018,
+        "wake_anchor": 0.0018054470419883,
+        "endpoint_epsilon": 0.05,
+        "raw_orientation": "W_greater_than_N3"
+      },
+      "selection_rule": "phase 1 selects one fixed physical Fs candidate by the mean objective across 3 deterministic participant-grouped CV repeats; phase 2 selects one return-prominence R and alpha on that locked OOF Fs; 0.005*alpha penalizes unnecessary correction; Zhang W-vs-N1 has the largest weight",
+      "selection_cv": {
+        "kind": "Repeated StratifiedGroupKFold",
+        "n_splits": 4,
+        "n_repeats": 3,
+        "random_states": [
+          20260904,
+          20268823,
+          20276742
+        ],
+        "seed_step": 7919,
+        "shuffle": true,
+        "group": "subject_group",
+        "folds": [
+          {
+            "fold": 1,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-003",
+              "Kumral:Sub-007",
+              "Kumral:Sub-009",
+              "Kumral:Sub-011",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Kumral:Sub-017",
+              "Kumral:Sub-019",
+              "Zhang:107",
+              "Zhang:183",
+              "Zhang:228",
+              "Zhang:245",
+              "Zhang:26",
+              "Zhang:337",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:384",
+              "Zhang:388",
+              "Zhang:411",
+              "Zhang:452",
+              "Zhang:455",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-016",
+              "Kumral:Sub-018",
+              "Zhang:10",
+              "Zhang:185",
+              "Zhang:309",
+              "Zhang:374"
+            ]
+          },
+          {
+            "fold": 2,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-007",
+              "Kumral:Sub-011",
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-016",
+              "Kumral:Sub-017",
+              "Kumral:Sub-018",
+              "Kumral:Sub-019",
+              "Zhang:10",
+              "Zhang:183",
+              "Zhang:185",
+              "Zhang:245",
+              "Zhang:26",
+              "Zhang:309",
+              "Zhang:337",
+              "Zhang:347",
+              "Zhang:374",
+              "Zhang:384",
+              "Zhang:388",
+              "Zhang:452",
+              "Zhang:455",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-003",
+              "Kumral:Sub-009",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Zhang:107",
+              "Zhang:228",
+              "Zhang:348",
+              "Zhang:411"
+            ]
+          },
+          {
+            "fold": 3,
+            "fit_groups": [
+              "Kumral:Sub-003",
+              "Kumral:Sub-007",
+              "Kumral:Sub-009",
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Kumral:Sub-016",
+              "Kumral:Sub-017",
+              "Kumral:Sub-018",
+              "Kumral:Sub-019",
+              "Zhang:10",
+              "Zhang:107",
+              "Zhang:183",
+              "Zhang:185",
+              "Zhang:228",
+              "Zhang:245",
+              "Zhang:309",
+              "Zhang:347",
+              "Zhang:348",
+              "Zhang:374",
+              "Zhang:384",
+              "Zhang:411",
+              "Zhang:452"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-011",
+              "Zhang:26",
+              "Zhang:337",
+              "Zhang:388",
+              "Zhang:455",
+              "Zhang:535"
+            ]
+          },
+          {
+            "fold": 4,
+            "fit_groups": [
+              "Kumral:Sub-001",
+              "Kumral:Sub-003",
+              "Kumral:Sub-009",
+              "Kumral:Sub-011",
+              "Kumral:Sub-012",
+              "Kumral:Sub-013",
+              "Kumral:Sub-014",
+              "Kumral:Sub-015",
+              "Kumral:Sub-016",
+              "Kumral:Sub-018",
+              "Zhang:10",
+              "Zhang:107",
+              "Zhang:185",
+              "Zhang:228",
+              "Zhang:26",
+              "Zhang:309",
+              "Zhang:337",
+              "Zhang:348",
+              "Zhang:374",
+              "Zhang:388",
+              "Zhang:411",
+              "Zhang:455",
+              "Zhang:535"
+            ],
+            "validation_groups": [
+              "Kumral:Sub-007",
+              "Kumral:Sub-017",
+              "Kumral:Sub-019",
+              "Zhang:183",
+              "Zhang:245",
+              "Zhang:347",
+              "Zhang:384",
+              "Zhang:452"
+            ]
+          }
+        ],
+        "repeats": [
+          {
+            "repeat": 1,
+            "random_state": 20260904,
+            "folds": [
+              {
+                "fold": 1,
+                "fit_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-015",
+                  "Kumral:Sub-017",
+                  "Kumral:Sub-019",
+                  "Zhang:107",
+                  "Zhang:183",
+                  "Zhang:228",
+                  "Zhang:245",
+                  "Zhang:26",
+                  "Zhang:337",
+                  "Zhang:347",
+                  "Zhang:348",
+                  "Zhang:384",
+                  "Zhang:388",
+                  "Zhang:411",
+                  "Zhang:452",
+                  "Zhang:455",
+                  "Zhang:535"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-018",
+                  "Zhang:10",
+                  "Zhang:185",
+                  "Zhang:309",
+                  "Zhang:374"
+                ]
+              },
+              {
+                "fold": 2,
+                "fit_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-017",
+                  "Kumral:Sub-018",
+                  "Kumral:Sub-019",
+                  "Zhang:10",
+                  "Zhang:183",
+                  "Zhang:185",
+                  "Zhang:245",
+                  "Zhang:26",
+                  "Zhang:309",
+                  "Zhang:337",
+                  "Zhang:347",
+                  "Zhang:374",
+                  "Zhang:384",
+                  "Zhang:388",
+                  "Zhang:452",
+                  "Zhang:455",
+                  "Zhang:535"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-015",
+                  "Zhang:107",
+                  "Zhang:228",
+                  "Zhang:348",
+                  "Zhang:411"
+                ]
+              },
+              {
+                "fold": 3,
+                "fit_groups": [
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-015",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-017",
+                  "Kumral:Sub-018",
+                  "Kumral:Sub-019",
+                  "Zhang:10",
+                  "Zhang:107",
+                  "Zhang:183",
+                  "Zhang:185",
+                  "Zhang:228",
+                  "Zhang:245",
+                  "Zhang:309",
+                  "Zhang:347",
+                  "Zhang:348",
+                  "Zhang:374",
+                  "Zhang:384",
+                  "Zhang:411",
+                  "Zhang:452"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-011",
+                  "Zhang:26",
+                  "Zhang:337",
+                  "Zhang:388",
+                  "Zhang:455",
+                  "Zhang:535"
+                ]
+              },
+              {
+                "fold": 4,
+                "fit_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-015",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-018",
+                  "Zhang:10",
+                  "Zhang:107",
+                  "Zhang:185",
+                  "Zhang:228",
+                  "Zhang:26",
+                  "Zhang:309",
+                  "Zhang:337",
+                  "Zhang:348",
+                  "Zhang:374",
+                  "Zhang:388",
+                  "Zhang:411",
+                  "Zhang:455",
+                  "Zhang:535"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-017",
+                  "Kumral:Sub-019",
+                  "Zhang:183",
+                  "Zhang:245",
+                  "Zhang:347",
+                  "Zhang:384",
+                  "Zhang:452"
+                ]
+              }
+            ]
+          },
+          {
+            "repeat": 2,
+            "random_state": 20268823,
+            "folds": [
+              {
+                "fold": 1,
+                "fit_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-017",
+                  "Kumral:Sub-018",
+                  "Kumral:Sub-019",
+                  "Zhang:10",
+                  "Zhang:107",
+                  "Zhang:185",
+                  "Zhang:26",
+                  "Zhang:309",
+                  "Zhang:337",
+                  "Zhang:347",
+                  "Zhang:348",
+                  "Zhang:374",
+                  "Zhang:384",
+                  "Zhang:411",
+                  "Zhang:452",
+                  "Zhang:535"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-015",
+                  "Zhang:183",
+                  "Zhang:228",
+                  "Zhang:245",
+                  "Zhang:388",
+                  "Zhang:455"
+                ]
+              },
+              {
+                "fold": 2,
+                "fit_groups": [
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-015",
+                  "Kumral:Sub-017",
+                  "Kumral:Sub-018",
+                  "Zhang:10",
+                  "Zhang:107",
+                  "Zhang:183",
+                  "Zhang:185",
+                  "Zhang:228",
+                  "Zhang:245",
+                  "Zhang:26",
+                  "Zhang:309",
+                  "Zhang:337",
+                  "Zhang:347",
+                  "Zhang:348",
+                  "Zhang:374",
+                  "Zhang:388",
+                  "Zhang:411",
+                  "Zhang:452",
+                  "Zhang:455"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-019",
+                  "Zhang:384",
+                  "Zhang:535"
+                ]
+              },
+              {
+                "fold": 3,
+                "fit_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-015",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-018",
+                  "Kumral:Sub-019",
+                  "Zhang:107",
+                  "Zhang:183",
+                  "Zhang:228",
+                  "Zhang:245",
+                  "Zhang:309",
+                  "Zhang:347",
+                  "Zhang:348",
+                  "Zhang:374",
+                  "Zhang:384",
+                  "Zhang:388",
+                  "Zhang:411",
+                  "Zhang:452",
+                  "Zhang:455",
+                  "Zhang:535"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-017",
+                  "Zhang:10",
+                  "Zhang:185",
+                  "Zhang:26",
+                  "Zhang:337"
+                ]
+              },
+              {
+                "fold": 4,
+                "fit_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-015",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-017",
+                  "Kumral:Sub-019",
+                  "Zhang:10",
+                  "Zhang:183",
+                  "Zhang:185",
+                  "Zhang:228",
+                  "Zhang:245",
+                  "Zhang:26",
+                  "Zhang:337",
+                  "Zhang:384",
+                  "Zhang:388",
+                  "Zhang:455",
+                  "Zhang:535"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-018",
+                  "Zhang:107",
+                  "Zhang:309",
+                  "Zhang:347",
+                  "Zhang:348",
+                  "Zhang:374",
+                  "Zhang:411",
+                  "Zhang:452"
+                ]
+              }
+            ]
+          },
+          {
+            "repeat": 3,
+            "random_state": 20276742,
+            "folds": [
+              {
+                "fold": 1,
+                "fit_groups": [
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-015",
+                  "Kumral:Sub-017",
+                  "Kumral:Sub-018",
+                  "Kumral:Sub-019",
+                  "Zhang:10",
+                  "Zhang:183",
+                  "Zhang:228",
+                  "Zhang:245",
+                  "Zhang:309",
+                  "Zhang:347",
+                  "Zhang:348",
+                  "Zhang:374",
+                  "Zhang:384",
+                  "Zhang:388",
+                  "Zhang:411",
+                  "Zhang:452",
+                  "Zhang:455"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-016",
+                  "Zhang:107",
+                  "Zhang:185",
+                  "Zhang:26",
+                  "Zhang:337",
+                  "Zhang:535"
+                ]
+              },
+              {
+                "fold": 2,
+                "fit_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-018",
+                  "Kumral:Sub-019",
+                  "Zhang:10",
+                  "Zhang:107",
+                  "Zhang:183",
+                  "Zhang:185",
+                  "Zhang:245",
+                  "Zhang:26",
+                  "Zhang:309",
+                  "Zhang:337",
+                  "Zhang:374",
+                  "Zhang:411",
+                  "Zhang:452",
+                  "Zhang:455",
+                  "Zhang:535"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-015",
+                  "Kumral:Sub-017",
+                  "Zhang:228",
+                  "Zhang:347",
+                  "Zhang:348",
+                  "Zhang:384",
+                  "Zhang:388"
+                ]
+              },
+              {
+                "fold": 3,
+                "fit_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-015",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-017",
+                  "Kumral:Sub-018",
+                  "Zhang:107",
+                  "Zhang:183",
+                  "Zhang:185",
+                  "Zhang:228",
+                  "Zhang:26",
+                  "Zhang:337",
+                  "Zhang:347",
+                  "Zhang:348",
+                  "Zhang:374",
+                  "Zhang:384",
+                  "Zhang:388",
+                  "Zhang:452",
+                  "Zhang:455",
+                  "Zhang:535"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-019",
+                  "Zhang:10",
+                  "Zhang:245",
+                  "Zhang:309",
+                  "Zhang:411"
+                ]
+              },
+              {
+                "fold": 4,
+                "fit_groups": [
+                  "Kumral:Sub-001",
+                  "Kumral:Sub-003",
+                  "Kumral:Sub-007",
+                  "Kumral:Sub-009",
+                  "Kumral:Sub-013",
+                  "Kumral:Sub-014",
+                  "Kumral:Sub-015",
+                  "Kumral:Sub-016",
+                  "Kumral:Sub-017",
+                  "Kumral:Sub-019",
+                  "Zhang:10",
+                  "Zhang:107",
+                  "Zhang:185",
+                  "Zhang:228",
+                  "Zhang:245",
+                  "Zhang:26",
+                  "Zhang:309",
+                  "Zhang:337",
+                  "Zhang:347",
+                  "Zhang:348",
+                  "Zhang:384",
+                  "Zhang:388",
+                  "Zhang:411",
+                  "Zhang:535"
+                ],
+                "validation_groups": [
+                  "Kumral:Sub-011",
+                  "Kumral:Sub-012",
+                  "Kumral:Sub-018",
+                  "Zhang:183",
+                  "Zhang:374",
+                  "Zhang:452",
+                  "Zhang:455"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "selected_Fs_metrics_oof": {
+        "auc_Zhang_W_vs_N1": 0.5423218467714955,
+        "auc_Zhang_W_vs_N2": 0.7355666429080542,
+        "auc_Zhang_W_vs_N3": 0.8743169398907105,
+        "auc_Zhang_W_vs_REM": 0.6721311475409836,
+        "auc_Zhang_W_vs_rest": 0.662152530292231,
+        "auc_W_vs_N1": 0.5423218467714955,
+        "auc_W_vs_N2": 0.7355666429080542,
+        "auc_W_vs_N3": 0.8743169398907105,
+        "auc_W_vs_REM": 0.6721311475409836,
+        "auc_W_vs_rest": 0.662152530292231,
+        "pooled_auc_W_vs_N1": 0.5422208475100525,
+        "pooled_auc_W_vs_N2": 0.7284096670610106,
+        "pooled_auc_W_vs_N3": 0.8706739526411658,
+        "pooled_auc_W_vs_REM": 0.6600142551674981,
+        "pooled_auc_W_vs_rest": 0.672581516843812,
+        "stage_medians": {
+          "W": 0.9543504105449124,
+          "N1": 0.9359342380292133,
+          "N2": 0.42333761098598544,
+          "N3": 0.042959316001638735,
+          "REM": 0.781637402786984
+        },
+        "Zhang_stage_medians": {
+          "W": 0.9543504105449124,
+          "N1": 0.9342887206503038,
+          "N2": 0.42333761098598544,
+          "N3": 0.01910665921917878,
+          "REM": 0.7692452819544823
+        },
+        "W_median": 0.9543504105449124,
+        "N1_median": 0.9359342380292133,
+        "N2_median": 0.42333761098598544,
+        "N3_median": 0.042959316001638735,
+        "REM_median": 0.781637402786984,
+        "Zhang_W_minus_N1_median": 0.02006168989460866,
+        "W_minus_N1_median": 0.02006168989460866,
+        "endpoint_mean_absolute_error_to_1_0": 0.044304452728363156,
+        "endpoint_score": 0.9556955472716369,
+        "nonW_fraction_above_0p90": 0.3241758241758242,
+        "Zhang_nonW_fraction_above_0p90": 0.34782608695652173,
+        "observed_min": 0.0007270316141621012,
+        "observed_max": 0.9999997672480809,
+        "bounded_unit_interval": true,
+        "selection_objective": 0.6267481912169574,
+        "mean_OOF_prediction_objective": 0.62559825712933,
+        "repeat_selection_objectives": [
+          0.6275978608994729,
+          0.6313577896249503,
+          0.621288923126449
+        ],
+        "repeat_selection_objective_mean": 0.6267481912169574,
+        "repeat_selection_objective_sd": 0.004154272665437333,
+        "Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+        "Fs_candidate_spec": {
+          "kind": "gamma_median_persistence_ratio",
+          "long_delta_s": 9.5,
+          "short_delta_s": 0.75,
+          "gamma_grid": [
+            0.03,
+            0.05,
+            0.08,
+            0.12,
+            0.18,
+            0.25,
+            0.35,
+            0.5,
+            0.75
+          ],
+          "gamma_pairs": [
+            {
+              "gamma": 0.03,
+              "long_column": "structure_S_d9p5_g0p03",
+              "short_column": "structure_S_d0p75_g0p03"
+            },
+            {
+              "gamma": 0.05,
+              "long_column": "structure_S_d9p5_g0p05",
+              "short_column": "structure_S_d0p75_g0p05"
+            },
+            {
+              "gamma": 0.08,
+              "long_column": "structure_S_d9p5_g0p08",
+              "short_column": "structure_S_d0p75_g0p08"
+            },
+            {
+              "gamma": 0.12,
+              "long_column": "structure_S_d9p5_g0p12",
+              "short_column": "structure_S_d0p75_g0p12"
+            },
+            {
+              "gamma": 0.18,
+              "long_column": "structure_S_d9p5_g0p18",
+              "short_column": "structure_S_d0p75_g0p18"
+            },
+            {
+              "gamma": 0.25,
+              "long_column": "structure_S_d9p5_g0p25",
+              "short_column": "structure_S_d0p75_g0p25"
+            },
+            {
+              "gamma": 0.35,
+              "long_column": "structure_S_d9p5_g0p35",
+              "short_column": "structure_S_d0p75_g0p35"
+            },
+            {
+              "gamma": 0.5,
+              "long_column": "structure_S_d9p5_g0p5",
+              "short_column": "structure_S_d0p75_g0p5"
+            },
+            {
+              "gamma": 0.75,
+              "long_column": "structure_S_d9p5_g0p75",
+              "short_column": "structure_S_d0p75_g0p75"
+            }
+          ],
+          "ratio_epsilon": 0.02,
+          "formula": "median_gamma[(S(long,gamma)+0.02)/(S(short,gamma)+0.02)]"
+        },
+        "candidate_grid_index": 16,
+        "fold_anchors": [
+          {
+            "fold": 1,
+            "n3_anchor": 0.5979361060931689,
+            "wake_anchor": 1.0348050914876692,
+            "raw_orientation": "W_greater_than_N3"
+          },
+          {
+            "fold": 2,
+            "n3_anchor": 0.7133674374323458,
+            "wake_anchor": 1.0912502238477009,
+            "raw_orientation": "W_greater_than_N3"
+          },
+          {
+            "fold": 3,
+            "n3_anchor": 0.5767982210201095,
+            "wake_anchor": 0.9523969534050178,
+            "raw_orientation": "W_greater_than_N3"
+          },
+          {
+            "fold": 4,
+            "n3_anchor": 0.5975855130784709,
+            "wake_anchor": 1.0465549348230911,
+            "raw_orientation": "W_greater_than_N3"
+          }
+        ],
+        "repeat_fold_anchors": [
+          {
+            "repeat": 1,
+            "fold_anchors": [
+              {
+                "fold": 1,
+                "n3_anchor": 0.5979361060931689,
+                "wake_anchor": 1.0348050914876692,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 2,
+                "n3_anchor": 0.7133674374323458,
+                "wake_anchor": 1.0912502238477009,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 3,
+                "n3_anchor": 0.5767982210201095,
+                "wake_anchor": 0.9523969534050178,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 4,
+                "n3_anchor": 0.5975855130784709,
+                "wake_anchor": 1.0465549348230911,
+                "raw_orientation": "W_greater_than_N3"
+              }
+            ]
+          },
+          {
+            "repeat": 2,
+            "fold_anchors": [
+              {
+                "fold": 1,
+                "n3_anchor": 0.5975855130784709,
+                "wake_anchor": 0.9946807529851787,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 2,
+                "n3_anchor": 0.5509612819419615,
+                "wake_anchor": 1.0406800131553802,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 3,
+                "n3_anchor": 0.5982866991078669,
+                "wake_anchor": 0.9910052475508166,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 4,
+                "n3_anchor": 0.5975855130784709,
+                "wake_anchor": 1.0797672672672671,
+                "raw_orientation": "W_greater_than_N3"
+              }
+            ]
+          },
+          {
+            "repeat": 3,
+            "fold_anchors": [
+              {
+                "fold": 1,
+                "n3_anchor": 0.5767982210201095,
+                "wake_anchor": 1.006772505264401,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 2,
+                "n3_anchor": 0.8160302307080349,
+                "wake_anchor": 1.0912502238477009,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 3,
+                "n3_anchor": 0.5614509843873366,
+                "wake_anchor": 1.0334336342360415,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 4,
+                "n3_anchor": 0.5767982210201095,
+                "wake_anchor": 1.0406800131553802,
+                "raw_orientation": "W_greater_than_N3"
+              }
+            ]
+          }
+        ],
+        "calibration": "smooth logistic; N3->0.05, W->0.95; deterministic 3-repeat grouped CV"
+      },
+      "selected_S_metrics_oof": {
+        "auc_Zhang_W_vs_N1": 0.5423218467714955,
+        "auc_Zhang_W_vs_N2": 0.7355666429080542,
+        "auc_Zhang_W_vs_N3": 0.8743169398907105,
+        "auc_Zhang_W_vs_REM": 0.6721311475409836,
+        "auc_Zhang_W_vs_rest": 0.662152530292231,
+        "auc_W_vs_N1": 0.5423218467714955,
+        "auc_W_vs_N2": 0.7355666429080542,
+        "auc_W_vs_N3": 0.8743169398907105,
+        "auc_W_vs_REM": 0.6721311475409836,
+        "auc_W_vs_rest": 0.662152530292231,
+        "pooled_auc_W_vs_N1": 0.5422208475100525,
+        "pooled_auc_W_vs_N2": 0.7284096670610106,
+        "pooled_auc_W_vs_N3": 0.8706739526411658,
+        "pooled_auc_W_vs_REM": 0.6600142551674981,
+        "pooled_auc_W_vs_rest": 0.672581516843812,
+        "stage_medians": {
+          "W": 0.9543504105449124,
+          "N1": 0.9359342380292133,
+          "N2": 0.42333761098598544,
+          "N3": 0.042959316001638735,
+          "REM": 0.781637402786984
+        },
+        "Zhang_stage_medians": {
+          "W": 0.9543504105449124,
+          "N1": 0.9342887206503038,
+          "N2": 0.42333761098598544,
+          "N3": 0.01910665921917878,
+          "REM": 0.7692452819544823
+        },
+        "W_median": 0.9543504105449124,
+        "N1_median": 0.9359342380292133,
+        "N2_median": 0.42333761098598544,
+        "N3_median": 0.042959316001638735,
+        "REM_median": 0.781637402786984,
+        "Zhang_W_minus_N1_median": 0.02006168989460866,
+        "W_minus_N1_median": 0.02006168989460866,
+        "endpoint_mean_absolute_error_to_1_0": 0.044304452728363156,
+        "endpoint_score": 0.9556955472716369,
+        "nonW_fraction_above_0p90": 0.3241758241758242,
+        "Zhang_nonW_fraction_above_0p90": 0.34782608695652173,
+        "observed_min": 0.0007270316141621012,
+        "observed_max": 0.9999997672480809,
+        "bounded_unit_interval": true,
+        "selection_objective": 0.6267481912169574,
+        "mean_OOF_prediction_objective": 0.62559825712933,
+        "repeat_selection_objectives": [
+          0.6275978608994729,
+          0.6313577896249503,
+          0.621288923126449
+        ],
+        "repeat_selection_objective_mean": 0.6267481912169574,
+        "repeat_selection_objective_sd": 0.004154272665437333,
+        "Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+        "Fs_candidate_spec": {
+          "kind": "gamma_median_persistence_ratio",
+          "long_delta_s": 9.5,
+          "short_delta_s": 0.75,
+          "gamma_grid": [
+            0.03,
+            0.05,
+            0.08,
+            0.12,
+            0.18,
+            0.25,
+            0.35,
+            0.5,
+            0.75
+          ],
+          "gamma_pairs": [
+            {
+              "gamma": 0.03,
+              "long_column": "structure_S_d9p5_g0p03",
+              "short_column": "structure_S_d0p75_g0p03"
+            },
+            {
+              "gamma": 0.05,
+              "long_column": "structure_S_d9p5_g0p05",
+              "short_column": "structure_S_d0p75_g0p05"
+            },
+            {
+              "gamma": 0.08,
+              "long_column": "structure_S_d9p5_g0p08",
+              "short_column": "structure_S_d0p75_g0p08"
+            },
+            {
+              "gamma": 0.12,
+              "long_column": "structure_S_d9p5_g0p12",
+              "short_column": "structure_S_d0p75_g0p12"
+            },
+            {
+              "gamma": 0.18,
+              "long_column": "structure_S_d9p5_g0p18",
+              "short_column": "structure_S_d0p75_g0p18"
+            },
+            {
+              "gamma": 0.25,
+              "long_column": "structure_S_d9p5_g0p25",
+              "short_column": "structure_S_d0p75_g0p25"
+            },
+            {
+              "gamma": 0.35,
+              "long_column": "structure_S_d9p5_g0p35",
+              "short_column": "structure_S_d0p75_g0p35"
+            },
+            {
+              "gamma": 0.5,
+              "long_column": "structure_S_d9p5_g0p5",
+              "short_column": "structure_S_d0p75_g0p5"
+            },
+            {
+              "gamma": 0.75,
+              "long_column": "structure_S_d9p5_g0p75",
+              "short_column": "structure_S_d0p75_g0p75"
+            }
+          ],
+          "ratio_epsilon": 0.02,
+          "formula": "median_gamma[(S(long,gamma)+0.02)/(S(short,gamma)+0.02)]"
+        },
+        "candidate_grid_index": 16,
+        "fold_anchors": [
+          {
+            "fold": 1,
+            "n3_anchor": 0.5979361060931689,
+            "wake_anchor": 1.0348050914876692,
+            "raw_orientation": "W_greater_than_N3"
+          },
+          {
+            "fold": 2,
+            "n3_anchor": 0.7133674374323458,
+            "wake_anchor": 1.0912502238477009,
+            "raw_orientation": "W_greater_than_N3"
+          },
+          {
+            "fold": 3,
+            "n3_anchor": 0.5767982210201095,
+            "wake_anchor": 0.9523969534050178,
+            "raw_orientation": "W_greater_than_N3"
+          },
+          {
+            "fold": 4,
+            "n3_anchor": 0.5975855130784709,
+            "wake_anchor": 1.0465549348230911,
+            "raw_orientation": "W_greater_than_N3"
+          }
+        ],
+        "repeat_fold_anchors": [
+          {
+            "repeat": 1,
+            "fold_anchors": [
+              {
+                "fold": 1,
+                "n3_anchor": 0.5979361060931689,
+                "wake_anchor": 1.0348050914876692,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 2,
+                "n3_anchor": 0.7133674374323458,
+                "wake_anchor": 1.0912502238477009,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 3,
+                "n3_anchor": 0.5767982210201095,
+                "wake_anchor": 0.9523969534050178,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 4,
+                "n3_anchor": 0.5975855130784709,
+                "wake_anchor": 1.0465549348230911,
+                "raw_orientation": "W_greater_than_N3"
+              }
+            ]
+          },
+          {
+            "repeat": 2,
+            "fold_anchors": [
+              {
+                "fold": 1,
+                "n3_anchor": 0.5975855130784709,
+                "wake_anchor": 0.9946807529851787,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 2,
+                "n3_anchor": 0.5509612819419615,
+                "wake_anchor": 1.0406800131553802,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 3,
+                "n3_anchor": 0.5982866991078669,
+                "wake_anchor": 0.9910052475508166,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 4,
+                "n3_anchor": 0.5975855130784709,
+                "wake_anchor": 1.0797672672672671,
+                "raw_orientation": "W_greater_than_N3"
+              }
+            ]
+          },
+          {
+            "repeat": 3,
+            "fold_anchors": [
+              {
+                "fold": 1,
+                "n3_anchor": 0.5767982210201095,
+                "wake_anchor": 1.006772505264401,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 2,
+                "n3_anchor": 0.8160302307080349,
+                "wake_anchor": 1.0912502238477009,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 3,
+                "n3_anchor": 0.5614509843873366,
+                "wake_anchor": 1.0334336342360415,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 4,
+                "n3_anchor": 0.5767982210201095,
+                "wake_anchor": 1.0406800131553802,
+                "raw_orientation": "W_greater_than_N3"
+              }
+            ]
+          }
+        ],
+        "calibration": "smooth logistic; N3->0.05, W->0.95; deterministic 3-repeat grouped CV"
+      },
+      "selected_dense_repeat_metrics_oof": {
+        "auc_Zhang_W_vs_N1": 0.5784543325526932,
+        "auc_Zhang_W_vs_N2": 0.7685911142789261,
+        "auc_Zhang_W_vs_N3": 0.8852459016393442,
+        "auc_Zhang_W_vs_REM": 0.6856316297010607,
+        "auc_Zhang_W_vs_rest": 0.6933951057258256,
+        "auc_W_vs_N1": 0.5784543325526932,
+        "auc_W_vs_N2": 0.7685911142789261,
+        "auc_W_vs_N3": 0.8852459016393442,
+        "auc_W_vs_REM": 0.6856316297010607,
+        "auc_W_vs_rest": 0.6933951057258256,
+        "pooled_auc_W_vs_N1": 0.5768635941849676,
+        "pooled_auc_W_vs_N2": 0.7561264154132161,
+        "pooled_auc_W_vs_N3": 0.8706739526411658,
+        "pooled_auc_W_vs_REM": 0.6771204561653599,
+        "pooled_auc_W_vs_rest": 0.6996036750135111,
+        "stage_medians": {
+          "W": 0.9901890350498168,
+          "N1": 0.9249085712591466,
+          "N2": 0.2777686060462753,
+          "N3": 0.027969094805372866,
+          "REM": 0.6630395254358445
+        },
+        "Zhang_stage_medians": {
+          "W": 0.9901890350498168,
+          "N1": 0.9249085712591466,
+          "N2": 0.2348034059968524,
+          "N3": 0.027969094805372866,
+          "REM": 0.6630395254358445
+        },
+        "W_median": 0.9901890350498168,
+        "N1_median": 0.9249085712591466,
+        "N2_median": 0.2777686060462753,
+        "N3_median": 0.027969094805372866,
+        "REM_median": 0.6630395254358445,
+        "Zhang_W_minus_N1_median": 0.0652804637906702,
+        "W_minus_N1_median": 0.0652804637906702,
+        "endpoint_mean_absolute_error_to_1_0": 0.018890029877778027,
+        "endpoint_score": 0.981109970122222,
+        "nonW_fraction_above_0p90": 0.2857142857142857,
+        "Zhang_nonW_fraction_above_0p90": 0.3188405797101449,
+        "observed_min": 1.0222176989437698e-05,
+        "observed_max": 0.9999999999999458,
+        "bounded_unit_interval": true,
+        "selection_objective": 0.6564715389686744,
+        "Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+        "repeat_mode": "return_prominence",
+        "repeat_column": "recurrence_P_h0p5_tau0p08",
+        "adjacent_repeat_column": "recurrence_P_h0p5_tau0p08",
+        "repeat_calibration": "fold-training N3/W tanh to 0.05/0.95; averaged over 3 deterministic grouped-CV repeats",
+        "repeat_fold_anchors": [
+          {
+            "repeat": 1,
+            "fold_anchors": [
+              {
+                "fold": 1,
+                "n3_anchor": -0.10494615882635111,
+                "wake_anchor": 0.0018054470419883,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 2,
+                "n3_anchor": -0.09138041734695435,
+                "wake_anchor": 0.0095416661351919,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 3,
+                "n3_anchor": -0.1088810861110687,
+                "wake_anchor": -0.0610252246260643,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 4,
+                "n3_anchor": -0.0967770665884018,
+                "wake_anchor": 0.0018054470419883,
+                "raw_orientation": "W_greater_than_N3"
+              }
+            ]
+          },
+          {
+            "repeat": 2,
+            "fold_anchors": [
+              {
+                "fold": 1,
+                "n3_anchor": -0.0889072120189666,
+                "wake_anchor": 0.008550301194190951,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 2,
+                "n3_anchor": -0.17332247644662854,
+                "wake_anchor": -0.0170509964227676,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 3,
+                "n3_anchor": -0.0967770665884018,
+                "wake_anchor": -0.0170509964227676,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 4,
+                "n3_anchor": -0.0967770665884018,
+                "wake_anchor": 0.0018054470419883,
+                "raw_orientation": "W_greater_than_N3"
+              }
+            ]
+          },
+          {
+            "repeat": 3,
+            "fold_anchors": [
+              {
+                "fold": 1,
+                "n3_anchor": -0.1088810861110687,
+                "wake_anchor": -0.05831240117549895,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 2,
+                "n3_anchor": -0.0967770665884018,
+                "wake_anchor": 0.01365842297673225,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 3,
+                "n3_anchor": -0.12950789183378214,
+                "wake_anchor": -0.0294917374849319,
+                "raw_orientation": "W_greater_than_N3"
+              },
+              {
+                "fold": 4,
+                "n3_anchor": -0.0928421393036842,
+                "wake_anchor": 0.0037010870873927498,
+                "raw_orientation": "W_greater_than_N3"
+              }
+            ]
+          }
+        ],
+        "alpha": 1.0,
+        "maximum_possible_absolute_correction": 0.25,
+        "observed_mean_absolute_correction_oof": 0.0866095578364713,
+        "observed_maximum_absolute_correction_oof": 0.24982064279098917,
+        "alpha_complexity_penalty": 0.005,
+        "regularized_selection_objective": 0.6514715389686744
+      },
+      "constraints": {
+        "Fs_family": "default: 20 fixed long/short persistence ratios, each marginalized by the median over all nine predeclared gamma values",
+        "Fs_candidate_policy": "robust_gamma_median",
+        "legacy_288_grid_role": "sensitivity only",
+        "inner_cv_repeats": 3,
+        "inner_cv_repeat_seed_step": 7919,
+        "only_one_repeat_column": true,
+        "primary_repeat_mode": "return_prominence",
+        "return_prominence_direction": "higher P must imply higher R and f",
+        "block_fraction_role": "sensitivity only",
+        "alpha_interval": [
+          0.0,
+          1.0
+        ],
+        "unit_interval_proof": "x^2 <= f <= 2x-x^2 for x=Fs in [0,1]",
+        "mathematical_endpoints_fixed": true,
+        "hard_anchor_clipping": false,
+        "dream_duration_used": false
+      },
+      "label_usage": {
+        "manual_final_stage": "grid selection and fold-local N3/W anchors",
+        "subject_group": "participant-grouped cross-validation",
+        "dataset": "within-Zhang primary W-vs-N1 audit",
+        "dream_duration": "not read",
+        "dream_report": "not read"
+      }
+    },
+    "repeat_columns": [
+      "recurrence_P_h0p5_tau0p08",
+      "recurrence_P_h0p5_tau0p1"
+    ],
+    "context_half_window_s": 0.5,
+    "tau_grid_s": [
+      0.08,
+      0.1
+    ],
+    "row_quantile": 0.75,
+    "quantile_method": "NumPy linear",
+    "beta": 0.25,
+    "nonwake_anchor": -0.09650388825684782,
+    "wake_anchor": 0.018992106430232473,
+    "calibration_epsilon": 0.05,
+    "selection_rule": "P*, q=0.75, logistic direction, and beta=0.25 are fixed design choices; only the underlying robust Fs definition is training-selected by the v2 repeated participant-grouped procedure",
+    "selection_cv": {
+      "kind": "Repeated StratifiedGroupKFold",
+      "n_splits": 4,
+      "n_repeats": 3,
+      "random_states": [
+        20260904,
+        20268823,
+        20276742
+      ],
+      "seed_step": 7919,
+      "shuffle": true,
+      "group": "subject_group",
+      "folds": [
+        {
+          "fold": 1,
+          "fit_groups": [
+            "Kumral:Sub-001",
+            "Kumral:Sub-003",
+            "Kumral:Sub-007",
+            "Kumral:Sub-009",
+            "Kumral:Sub-011",
+            "Kumral:Sub-014",
+            "Kumral:Sub-015",
+            "Kumral:Sub-017",
+            "Kumral:Sub-019",
+            "Zhang:107",
+            "Zhang:183",
+            "Zhang:228",
+            "Zhang:245",
+            "Zhang:26",
+            "Zhang:337",
+            "Zhang:347",
+            "Zhang:348",
+            "Zhang:384",
+            "Zhang:388",
+            "Zhang:411",
+            "Zhang:452",
+            "Zhang:455",
+            "Zhang:535"
+          ],
+          "validation_groups": [
+            "Kumral:Sub-012",
+            "Kumral:Sub-013",
+            "Kumral:Sub-016",
+            "Kumral:Sub-018",
+            "Zhang:10",
+            "Zhang:185",
+            "Zhang:309",
+            "Zhang:374"
+          ]
+        },
+        {
+          "fold": 2,
+          "fit_groups": [
+            "Kumral:Sub-001",
+            "Kumral:Sub-007",
+            "Kumral:Sub-011",
+            "Kumral:Sub-012",
+            "Kumral:Sub-013",
+            "Kumral:Sub-016",
+            "Kumral:Sub-017",
+            "Kumral:Sub-018",
+            "Kumral:Sub-019",
+            "Zhang:10",
+            "Zhang:183",
+            "Zhang:185",
+            "Zhang:245",
+            "Zhang:26",
+            "Zhang:309",
+            "Zhang:337",
+            "Zhang:347",
+            "Zhang:374",
+            "Zhang:384",
+            "Zhang:388",
+            "Zhang:452",
+            "Zhang:455",
+            "Zhang:535"
+          ],
+          "validation_groups": [
+            "Kumral:Sub-003",
+            "Kumral:Sub-009",
+            "Kumral:Sub-014",
+            "Kumral:Sub-015",
+            "Zhang:107",
+            "Zhang:228",
+            "Zhang:348",
+            "Zhang:411"
+          ]
+        },
+        {
+          "fold": 3,
+          "fit_groups": [
+            "Kumral:Sub-003",
+            "Kumral:Sub-007",
+            "Kumral:Sub-009",
+            "Kumral:Sub-012",
+            "Kumral:Sub-013",
+            "Kumral:Sub-014",
+            "Kumral:Sub-015",
+            "Kumral:Sub-016",
+            "Kumral:Sub-017",
+            "Kumral:Sub-018",
+            "Kumral:Sub-019",
+            "Zhang:10",
+            "Zhang:107",
+            "Zhang:183",
+            "Zhang:185",
+            "Zhang:228",
+            "Zhang:245",
+            "Zhang:309",
+            "Zhang:347",
+            "Zhang:348",
+            "Zhang:374",
+            "Zhang:384",
+            "Zhang:411",
+            "Zhang:452"
+          ],
+          "validation_groups": [
+            "Kumral:Sub-001",
+            "Kumral:Sub-011",
+            "Zhang:26",
+            "Zhang:337",
+            "Zhang:388",
+            "Zhang:455",
+            "Zhang:535"
+          ]
+        },
+        {
+          "fold": 4,
+          "fit_groups": [
+            "Kumral:Sub-001",
+            "Kumral:Sub-003",
+            "Kumral:Sub-009",
+            "Kumral:Sub-011",
+            "Kumral:Sub-012",
+            "Kumral:Sub-013",
+            "Kumral:Sub-014",
+            "Kumral:Sub-015",
+            "Kumral:Sub-016",
+            "Kumral:Sub-018",
+            "Zhang:10",
+            "Zhang:107",
+            "Zhang:185",
+            "Zhang:228",
+            "Zhang:26",
+            "Zhang:309",
+            "Zhang:337",
+            "Zhang:348",
+            "Zhang:374",
+            "Zhang:388",
+            "Zhang:411",
+            "Zhang:455",
+            "Zhang:535"
+          ],
+          "validation_groups": [
+            "Kumral:Sub-007",
+            "Kumral:Sub-017",
+            "Kumral:Sub-019",
+            "Zhang:183",
+            "Zhang:245",
+            "Zhang:347",
+            "Zhang:384",
+            "Zhang:452"
+          ]
+        }
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "random_state": 20260904,
+          "folds": [
+            {
+              "fold": 1,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-017",
+                "Kumral:Sub-019",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-016",
+                "Kumral:Sub-018",
+                "Zhang:10",
+                "Zhang:185",
+                "Zhang:309",
+                "Zhang:374"
+              ]
+            },
+            {
+              "fold": 2,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-007",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:452",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-009",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Zhang:107",
+                "Zhang:228",
+                "Zhang:348",
+                "Zhang:411"
+              ]
+            },
+            {
+              "fold": 3,
+              "fit_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:309",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:411",
+                "Zhang:452"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-011",
+                "Zhang:26",
+                "Zhang:337",
+                "Zhang:388",
+                "Zhang:455",
+                "Zhang:535"
+              ]
+            },
+            {
+              "fold": 4,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-018",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-007",
+                "Kumral:Sub-017",
+                "Kumral:Sub-019",
+                "Zhang:183",
+                "Zhang:245",
+                "Zhang:347",
+                "Zhang:384",
+                "Zhang:452"
+              ]
+            }
+          ]
+        },
+        {
+          "repeat": 2,
+          "random_state": 20268823,
+          "folds": [
+            {
+              "fold": 1,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:185",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-012",
+                "Kumral:Sub-015",
+                "Zhang:183",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:388",
+                "Zhang:455"
+              ]
+            },
+            {
+              "fold": 2,
+              "fit_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-012",
+                "Kumral:Sub-015",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:455"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-011",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-016",
+                "Kumral:Sub-019",
+                "Zhang:384",
+                "Zhang:535"
+              ]
+            },
+            {
+              "fold": 3,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:309",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-017",
+                "Zhang:10",
+                "Zhang:185",
+                "Zhang:26",
+                "Zhang:337"
+              ]
+            },
+            {
+              "fold": 4,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:337",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-018",
+                "Zhang:107",
+                "Zhang:309",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:411",
+                "Zhang:452"
+              ]
+            }
+          ]
+        },
+        {
+          "repeat": 3,
+          "random_state": 20276742,
+          "folds": [
+            {
+              "fold": 1,
+              "fit_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:183",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:309",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:455"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-007",
+                "Kumral:Sub-016",
+                "Zhang:107",
+                "Zhang:185",
+                "Zhang:26",
+                "Zhang:337",
+                "Zhang:535"
+              ]
+            },
+            {
+              "fold": 2,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-007",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-016",
+                "Kumral:Sub-018",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:374",
+                "Zhang:411",
+                "Zhang:452",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-003",
+                "Kumral:Sub-009",
+                "Kumral:Sub-015",
+                "Kumral:Sub-017",
+                "Zhang:228",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:384",
+                "Zhang:388"
+              ]
+            },
+            {
+              "fold": 3,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-018",
+                "Zhang:107",
+                "Zhang:183",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:26",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:374",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:452",
+                "Zhang:455",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:245",
+                "Zhang:309",
+                "Zhang:411"
+              ]
+            },
+            {
+              "fold": 4,
+              "fit_groups": [
+                "Kumral:Sub-001",
+                "Kumral:Sub-003",
+                "Kumral:Sub-007",
+                "Kumral:Sub-009",
+                "Kumral:Sub-013",
+                "Kumral:Sub-014",
+                "Kumral:Sub-015",
+                "Kumral:Sub-016",
+                "Kumral:Sub-017",
+                "Kumral:Sub-019",
+                "Zhang:10",
+                "Zhang:107",
+                "Zhang:185",
+                "Zhang:228",
+                "Zhang:245",
+                "Zhang:26",
+                "Zhang:309",
+                "Zhang:337",
+                "Zhang:347",
+                "Zhang:348",
+                "Zhang:384",
+                "Zhang:388",
+                "Zhang:411",
+                "Zhang:535"
+              ],
+              "validation_groups": [
+                "Kumral:Sub-011",
+                "Kumral:Sub-012",
+                "Kumral:Sub-018",
+                "Zhang:183",
+                "Zhang:374",
+                "Zhang:452",
+                "Zhang:455"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "crossfit_pure_Fs_metrics": {
+      "auc_Zhang_W_vs_N1": 0.5423218467714955,
+      "auc_Zhang_W_vs_N2": 0.7355666429080542,
+      "auc_Zhang_W_vs_N3": 0.8743169398907105,
+      "auc_Zhang_W_vs_REM": 0.6721311475409836,
+      "auc_Zhang_W_vs_rest": 0.662152530292231,
+      "auc_W_vs_N1": 0.5423218467714955,
+      "auc_W_vs_N2": 0.7355666429080542,
+      "auc_W_vs_N3": 0.8743169398907105,
+      "auc_W_vs_REM": 0.6721311475409836,
+      "auc_W_vs_rest": 0.662152530292231,
+      "pooled_auc_W_vs_N1": 0.5422208475100525,
+      "pooled_auc_W_vs_N2": 0.7284096670610106,
+      "pooled_auc_W_vs_N3": 0.8706739526411658,
+      "pooled_auc_W_vs_REM": 0.6600142551674981,
+      "pooled_auc_W_vs_rest": 0.672581516843812,
+      "stage_medians": {
+        "W": 0.9543504105449124,
+        "N1": 0.9359342380292133,
+        "N2": 0.42333761098598544,
+        "N3": 0.042959316001638735,
+        "REM": 0.781637402786984
+      },
+      "Zhang_stage_medians": {
+        "W": 0.9543504105449124,
+        "N1": 0.9342887206503038,
+        "N2": 0.42333761098598544,
+        "N3": 0.01910665921917878,
+        "REM": 0.7692452819544823
+      },
+      "W_median": 0.9543504105449124,
+      "N1_median": 0.9359342380292133,
+      "N2_median": 0.42333761098598544,
+      "N3_median": 0.042959316001638735,
+      "REM_median": 0.781637402786984,
+      "Zhang_W_minus_N1_median": 0.02006168989460866,
+      "W_minus_N1_median": 0.02006168989460866,
+      "endpoint_mean_absolute_error_to_1_0": 0.044304452728363156,
+      "endpoint_score": 0.9556955472716369,
+      "nonW_fraction_above_0p90": 0.3241758241758242,
+      "Zhang_nonW_fraction_above_0p90": 0.34782608695652173,
+      "observed_min": 0.0007270316141621012,
+      "observed_max": 0.9999997672480809,
+      "bounded_unit_interval": true,
+      "selection_objective": 0.62559825712933
+    },
+    "crossfit_v3_metrics": {
+      "auc_Zhang_W_vs_N1": 0.5463365674138508,
+      "auc_Zhang_W_vs_N2": 0.7431693989071039,
+      "auc_Zhang_W_vs_N3": 0.8797814207650274,
+      "auc_Zhang_W_vs_REM": 0.674059787849566,
+      "auc_Zhang_W_vs_rest": 0.667735804229033,
+      "auc_W_vs_N1": 0.5463365674138508,
+      "auc_W_vs_N2": 0.7431693989071039,
+      "auc_W_vs_N3": 0.8797814207650274,
+      "auc_W_vs_REM": 0.674059787849566,
+      "auc_W_vs_rest": 0.667735804229033,
+      "pooled_auc_W_vs_N1": 0.5453139498917414,
+      "pooled_auc_W_vs_N2": 0.7350008450228157,
+      "pooled_auc_W_vs_N3": 0.8797814207650273,
+      "pooled_auc_W_vs_REM": 0.6621525302922309,
+      "pooled_auc_W_vs_rest": 0.6777157268960549,
+      "stage_medians": {
+        "W": 0.956352215873946,
+        "N1": 0.9253311063653183,
+        "N2": 0.42333634235539336,
+        "N3": 0.03886981240698122,
+        "REM": 0.7364840148158778
+      },
+      "Zhang_stage_medians": {
+        "W": 0.956352215873946,
+        "N1": 0.928341137921257,
+        "N2": 0.42333634235539336,
+        "N3": 0.01756759257620937,
+        "REM": 0.7357568598110964
+      },
+      "W_median": 0.956352215873946,
+      "N1_median": 0.9253311063653183,
+      "N2_median": 0.42333634235539336,
+      "N3_median": 0.03886981240698122,
+      "REM_median": 0.7364840148158778,
+      "Zhang_W_minus_N1_median": 0.02801107795268898,
+      "W_minus_N1_median": 0.02801107795268898,
+      "endpoint_mean_absolute_error_to_1_0": 0.0412587982665176,
+      "endpoint_score": 0.9587412017334824,
+      "nonW_fraction_above_0p90": 0.3021978021978022,
+      "Zhang_nonW_fraction_above_0p90": 0.3188405797101449,
+      "observed_min": 0.0005756017592260489,
+      "observed_max": 0.9999998187326138,
+      "bounded_unit_interval": true,
+      "selection_objective": 0.6310851480575124
+    },
+    "constraints": {
+      "maximum_absolute_logit_shift": 0.25,
+      "exact_mathematical_endpoints_fixed": true,
+      "repeat_calibration_scope": "Zhang W versus all Zhang non-W",
+      "repeat_physical_direction": "higher P* must imply higher R; no sign flip",
+      "dream_information_used": false,
+      "test_labels_used_for_fit": false,
+      "beta_selected_by_nested_cv": false
+    }
+  },
+  "pairwise_auc_metrics": [
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 49,
+      "auc": 0.5219136835061894
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 49,
+      "auc": 0.560722649715624
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 49,
+      "auc": 0.5292740046838407
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 69,
+      "auc": 0.7358042290330244
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 69,
+      "auc": 0.766928011404134
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 69,
+      "auc": 0.7460204324067475
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 3,
+      "auc": 0.8688524590163935
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 3,
+      "auc": 0.8961748633879781
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 3,
+      "auc": 0.8743169398907105
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 17,
+      "auc": 0.6827386692381872
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 17,
+      "auc": 0.6605593056894888
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 17,
+      "auc": 0.6837029893924783
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 138,
+      "auc": 0.6562128771679735
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 138,
+      "auc": 0.6834164884770729
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 61,
+      "n_negative_epochs": 138,
+      "auc": 0.6641720123544785
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 27,
+      "auc": 0.6867724867724867
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 27,
+      "auc": 0.6730158730158731
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 27,
+      "auc": 0.688888888888889
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 36,
+      "auc": 0.7277777777777777
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 36,
+      "auc": 0.7285714285714286
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 36,
+      "auc": 0.7333333333333334
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 2,
+      "auc": 0.9428571428571428
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 2,
+      "auc": 0.8999999999999999
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 2,
+      "auc": 0.9571428571428571
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 9,
+      "auc": 0.7238095238095239
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 9,
+      "auc": 0.7047619047619047
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 9,
+      "auc": 0.7333333333333334
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 74,
+      "auc": 0.7181467181467182
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 74,
+      "auc": 0.71003861003861
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "outer_fold": null,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 35,
+      "n_negative_epochs": 74,
+      "auc": 0.7231660231660232
+    }
+  ],
+  "outer_fold_auc_metrics": [
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 14,
+      "auc": 0.6224489795918366
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 14,
+      "auc": 0.7210884353741496
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 14,
+      "auc": 0.6496598639455782
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 8,
+      "auc": 0.8035714285714286
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 8,
+      "auc": 0.8511904761904762
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 8,
+      "auc": 0.8154761904761905
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 0,
+      "auc": null
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 0,
+      "auc": null
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 0,
+      "auc": null
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 5,
+      "auc": 0.819047619047619
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 5,
+      "auc": 0.7904761904761906
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 5,
+      "auc": 0.819047619047619
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 27,
+      "auc": 0.7125220458553791
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 27,
+      "auc": 0.7724867724867724
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 1,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 21,
+      "n_negative_epochs": 27,
+      "auc": 0.7301587301587301
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 6,
+      "auc": 0.6274509803921569
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 6,
+      "auc": 0.7254901960784313
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 6,
+      "auc": 0.6372549019607844
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 10,
+      "auc": 0.8294117647058824
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 10,
+      "auc": 0.8705882352941177
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 10,
+      "auc": 0.8411764705882353
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 1,
+      "auc": 1.0
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 1,
+      "auc": 1.0
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 1,
+      "auc": 1.0
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 3,
+      "auc": 0.7450980392156863
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 3,
+      "auc": 0.7254901960784315
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 3,
+      "auc": 0.7254901960784315
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 20,
+      "auc": 0.7647058823529411
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 20,
+      "auc": 0.8117647058823529
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 2,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 17,
+      "n_negative_epochs": 20,
+      "auc": 0.7705882352941177
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 10,
+      "auc": 0.24
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 10,
+      "auc": 0.28
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 10,
+      "auc": 0.22000000000000003
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 24,
+      "auc": 0.5416666666666667
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 24,
+      "auc": 0.6583333333333333
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 24,
+      "auc": 0.575
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 1,
+      "auc": 0.4
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 1,
+      "auc": 0.8
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 1,
+      "auc": 0.4
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 1,
+      "auc": 0.8
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 1,
+      "auc": 0.8
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 1,
+      "auc": 0.8
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 36,
+      "auc": 0.46111111111111114
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 36,
+      "auc": 0.5611111111111111
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 3,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 5,
+      "n_negative_epochs": 36,
+      "auc": 0.47777777777777775
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 11,
+      "auc": 0.47878787878787876
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 11,
+      "auc": 0.4666666666666667
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 11,
+      "auc": 0.48484848484848486
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 14,
+      "auc": 0.7666666666666667
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 14,
+      "auc": 0.761904761904762
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 14,
+      "auc": 0.7666666666666667
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 1,
+      "auc": 0.9333333333333333
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 1,
+      "auc": 0.8666666666666667
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 1,
+      "auc": 0.9333333333333333
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 6,
+      "auc": 0.5
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 6,
+      "auc": 0.47777777777777775
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 6,
+      "auc": 0.5
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 32,
+      "auc": 0.6229166666666667
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 32,
+      "auc": 0.6104166666666666
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 4,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 15,
+      "n_negative_epochs": 32,
+      "auc": 0.625
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 8,
+      "auc": 0.25
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 8,
+      "auc": 0.2916666666666667
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N1",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 8,
+      "auc": 0.25
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 13,
+      "auc": 0.3589743589743589
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 13,
+      "auc": 0.48717948717948717
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N2",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 13,
+      "auc": 0.4358974358974359
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 0,
+      "auc": null
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 0,
+      "auc": null
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "N3",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 0,
+      "auc": null
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 2,
+      "auc": 0.0
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 2,
+      "auc": 0.0
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "REM",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 2,
+      "auc": 0.0
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_self_similarity",
+      "component_label": "pure F_S",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 23,
+      "auc": 0.2898550724637681
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 23,
+      "auc": 0.37681159420289856
+    },
+    {
+      "evaluation": "training_outer_fold",
+      "outer_fold": 5,
+      "dataset_scope": "Zhang only",
+      "positive_stage": "W",
+      "negative_stage": "all non-W sleep",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_positive_epochs": 3,
+      "n_negative_epochs": 23,
+      "auc": 0.3333333333333333
+    }
+  ],
+  "bootstrap_summary": [
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "negative_stage": "N1",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.036937403965134265,
+      "median_delta_auc_minus_pure_Fs": 0.03658708474282246,
+      "ci95_low": 0.003939032628861794,
+      "ci95_high": 0.07193313840372657,
+      "fraction_delta_above_zero": 0.991
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "negative_stage": "N1",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.007433304984571949,
+      "median_delta_auc_minus_pure_Fs": 0.007354116894599277,
+      "ci95_low": -0.004083142132592729,
+      "ci95_high": 0.019814689893258138,
+      "fraction_delta_above_zero": 0.895
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "negative_stage": "N2",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.03152816729842857,
+      "median_delta_auc_minus_pure_Fs": 0.03083181039001509,
+      "ci95_low": 0.005629092029597749,
+      "ci95_high": 0.060945011450526054,
+      "fraction_delta_above_zero": 0.992
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "negative_stage": "N2",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.00990167442282165,
+      "median_delta_auc_minus_pure_Fs": 0.0094834486501153,
+      "ci95_low": 0.001960497649352022,
+      "ci95_high": 0.019658479670938214,
+      "fraction_delta_above_zero": 0.9935
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "negative_stage": "N3",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.029851211388067036,
+      "median_delta_auc_minus_pure_Fs": 0.02499999999999991,
+      "ci95_low": -0.031262400793650794,
+      "ci95_high": 0.11770588235294077,
+      "fraction_delta_above_zero": 0.8075
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "negative_stage": "N3",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.00571730177981465,
+      "median_delta_auc_minus_pure_Fs": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0363804713804713,
+      "fraction_delta_above_zero": 0.411
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "negative_stage": "REM",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": -0.02438592943879771,
+      "median_delta_auc_minus_pure_Fs": -0.022115384615384648,
+      "ci95_low": -0.07208650958650963,
+      "ci95_high": 0.010348444658789377,
+      "fraction_delta_above_zero": 0.1005
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "negative_stage": "REM",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.00011361705874634337,
+      "median_delta_auc_minus_pure_Fs": 0.0,
+      "ci95_low": -0.01100127551020415,
+      "ci95_high": 0.012471806904579956,
+      "fraction_delta_above_zero": 0.4285
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "negative_stage": "all non-W sleep",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.02661488224472796,
+      "median_delta_auc_minus_pure_Fs": 0.026764245308522894,
+      "ci95_low": 0.00129182910981151,
+      "ci95_high": 0.04997795115332444,
+      "fraction_delta_above_zero": 0.9795
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "negative_stage": "all non-W sleep",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.007721081872486507,
+      "median_delta_auc_minus_pure_Fs": 0.007583264090846142,
+      "ci95_low": 0.0011434128415260703,
+      "ci95_high": 0.014733587969463306,
+      "fraction_delta_above_zero": 0.992
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "negative_stage": "N1",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": -0.014404834954536306,
+      "median_delta_auc_minus_pure_Fs": -0.012108993157380177,
+      "ci95_low": -0.05769230769230771,
+      "ci95_high": 0.01270130842741125,
+      "fraction_delta_above_zero": 0.1815
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "negative_stage": "N1",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.004053891633685031,
+      "median_delta_auc_minus_pure_Fs": 0.0008780064397417298,
+      "ci95_low": -0.016129032258064505,
+      "ci95_high": 0.04029422514619882,
+      "fraction_delta_above_zero": 0.518
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "negative_stage": "N2",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": -0.001888347987912211,
+      "median_delta_auc_minus_pure_Fs": -0.000791266025641113,
+      "ci95_low": -0.042227743271221585,
+      "ci95_high": 0.031486697965571034,
+      "fraction_delta_above_zero": 0.475
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "negative_stage": "N2",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.005220960251829728,
+      "median_delta_auc_minus_pure_Fs": 0.004861111111111205,
+      "ci95_low": -0.0027881265076387636,
+      "ci95_high": 0.01535112984073096,
+      "fraction_delta_above_zero": 0.8765
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "negative_stage": "N3",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": -0.053976320204454024,
+      "median_delta_auc_minus_pure_Fs": -0.04999999999999993,
+      "ci95_low": -0.19354838709677424,
+      "ci95_high": 0.06456989247311803,
+      "fraction_delta_above_zero": 0.106
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "negative_stage": "N3",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.01588108709933156,
+      "median_delta_auc_minus_pure_Fs": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.08333333333333337,
+      "fraction_delta_above_zero": 0.449
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "negative_stage": "REM",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": -0.02529210097228833,
+      "median_delta_auc_minus_pure_Fs": -0.017857142857142794,
+      "ci95_low": -0.11153846153846153,
+      "ci95_high": 0.019052197802197822,
+      "fraction_delta_above_zero": 0.1685
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "negative_stage": "REM",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.009718836109764935,
+      "median_delta_auc_minus_pure_Fs": 0.007736972853251867,
+      "ci95_low": 0.0,
+      "ci95_high": 0.03333333333333344,
+      "fraction_delta_above_zero": 0.781
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "negative_stage": "all non-W sleep",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": -0.01031817811138946,
+      "median_delta_auc_minus_pure_Fs": -0.007759227144820302,
+      "ci95_low": -0.0489549512987012,
+      "ci95_high": 0.01514051535458837,
+      "fraction_delta_above_zero": 0.272
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "negative_stage": "all non-W sleep",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "resampling_unit": "Zhang subject_group",
+      "replicates": 2000,
+      "mean_delta_auc_minus_pure_Fs": 0.005883967428284683,
+      "median_delta_auc_minus_pure_Fs": 0.004810778117902759,
+      "ci95_low": -0.004726798091637456,
+      "ci95_high": 0.02267702535559673,
+      "fraction_delta_above_zero": 0.8525
+    }
+  ],
+  "correction_magnitude_metrics": [
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_epochs": 243,
+      "mean_signed_change": -0.04461366797285737,
+      "mean_absolute_change": 0.07459417323745447,
+      "median_absolute_change": 0.045298095473208955,
+      "q90_absolute_change": 0.20519150359774635,
+      "maximum_absolute_change": 0.2489152985156433,
+      "fraction_increased": 0.3333333333333333,
+      "fraction_decreased": 0.6666666666666666
+    },
+    {
+      "evaluation": "training_nested_subject_group_oof",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_epochs": 243,
+      "mean_signed_change": -0.010246984504878405,
+      "mean_absolute_change": 0.018688735397638413,
+      "median_absolute_change": 0.011121648202117584,
+      "q90_absolute_change": 0.04916575972630499,
+      "maximum_absolute_change": 0.06164483154864864,
+      "fraction_increased": 0.38271604938271603,
+      "fraction_decreased": 0.6172839506172839
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "component": "f_old_return_prominence",
+      "component_label": "old single-P correction",
+      "n_epochs": 131,
+      "mean_signed_change": -0.05009706556077422,
+      "mean_absolute_change": 0.07219265536884979,
+      "median_absolute_change": 0.04204367237992512,
+      "q90_absolute_change": 0.1923473693688749,
+      "maximum_absolute_change": 0.24357427647612453,
+      "fraction_increased": 0.32061068702290074,
+      "fraction_decreased": 0.6793893129770993
+    },
+    {
+      "evaluation": "repeated_held_aside_diagnostic_test",
+      "component": "f_repeat_micro_v3",
+      "component_label": "fixed R^* micro-correction",
+      "n_epochs": 131,
+      "mean_signed_change": -0.012280973428648683,
+      "mean_absolute_change": 0.017976669079053004,
+      "median_absolute_change": 0.010580865032120745,
+      "q90_absolute_change": 0.044894210049961636,
+      "maximum_absolute_change": 0.06121453585589326,
+      "fraction_increased": 0.3282442748091603,
+      "fraction_decreased": 0.6717557251908397
+    }
+  ],
+  "R_weight_sensitivity": {
+    "status": "descriptive_post_lock_audit_not_used_for_selection",
+    "grid_csv": "R_weight_sensitivity.csv",
+    "quantiles": [
+      0.7,
+      0.75,
+      0.8,
+      0.9
+    ],
+    "betas": [
+      0.2,
+      0.25,
+      0.275,
+      0.5,
+      1.0
+    ]
+  },
+  "selection_stability": [
+    {
+      "outer_fold": 1,
+      "fit_epochs": 188,
+      "validation_epochs": 55,
+      "fit_subjects": 25,
+      "validation_subjects": 6,
+      "validation_groups": "Kumral:Sub-007|Kumral:Sub-016|Zhang:107|Zhang:309|Zhang:455|Zhang:535",
+      "selected_Fs_candidate": "gamma_median_persistence__long_d5__short_d1",
+      "selected_old_P_column": "recurrence_P_h0p5_tau0p1",
+      "selected_old_alpha": 1.0,
+      "Rstar_nonwake_anchor": -0.09472140483558172,
+      "Rstar_wake_anchor": -0.013914382318034763,
+      "Rstar_anchor_gap": 0.08080702251754696,
+      "Rstar_beta_fixed": 0.25,
+      "Rstar_direction_valid": true,
+      "Rstar_definition_selected_in_fold": false,
+      "Fs_refitted_inside_outer_fold": true,
+      "Rstar_calibration_refitted_inside_outer_fold": true
+    },
+    {
+      "outer_fold": 2,
+      "fit_epochs": 194,
+      "validation_epochs": 49,
+      "fit_subjects": 25,
+      "validation_subjects": 6,
+      "validation_groups": "Kumral:Sub-011|Kumral:Sub-014|Kumral:Sub-018|Zhang:228|Zhang:26|Zhang:347",
+      "selected_Fs_candidate": "gamma_median_persistence__long_d5__short_d1",
+      "selected_old_P_column": "recurrence_P_h0p5_tau0p08",
+      "selected_old_alpha": 1.0,
+      "Rstar_nonwake_anchor": -0.093414825387299,
+      "Rstar_wake_anchor": 0.00775935454294086,
+      "Rstar_anchor_gap": 0.10117417993023986,
+      "Rstar_beta_fixed": 0.25,
+      "Rstar_direction_valid": true,
+      "Rstar_definition_selected_in_fold": false,
+      "Fs_refitted_inside_outer_fold": true,
+      "Rstar_calibration_refitted_inside_outer_fold": true
+    },
+    {
+      "outer_fold": 3,
+      "fit_epochs": 197,
+      "validation_epochs": 46,
+      "fit_subjects": 25,
+      "validation_subjects": 6,
+      "validation_groups": "Kumral:Sub-001|Kumral:Sub-012|Zhang:183|Zhang:337|Zhang:374|Zhang:388",
+      "selected_Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+      "selected_old_P_column": "recurrence_P_h0p5_tau0p08",
+      "selected_old_alpha": 1.0,
+      "Rstar_nonwake_anchor": -0.09924855083227152,
+      "Rstar_wake_anchor": 0.030740266200154947,
+      "Rstar_anchor_gap": 0.12998881703242646,
+      "Rstar_beta_fixed": 0.25,
+      "Rstar_direction_valid": true,
+      "Rstar_definition_selected_in_fold": false,
+      "Fs_refitted_inside_outer_fold": true,
+      "Rstar_calibration_refitted_inside_outer_fold": true
+    },
+    {
+      "outer_fold": 4,
+      "fit_epochs": 182,
+      "validation_epochs": 61,
+      "fit_subjects": 22,
+      "validation_subjects": 9,
+      "validation_groups": "Kumral:Sub-009|Kumral:Sub-013|Kumral:Sub-017|Kumral:Sub-019|Zhang:10|Zhang:185|Zhang:348|Zhang:384|Zhang:452",
+      "selected_Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+      "selected_old_P_column": "recurrence_P_h0p5_tau0p08",
+      "selected_old_alpha": 1.0,
+      "Rstar_nonwake_anchor": -0.10495797917246816,
+      "Rstar_wake_anchor": 0.034807700663804966,
+      "Rstar_anchor_gap": 0.13976567983627314,
+      "Rstar_beta_fixed": 0.25,
+      "Rstar_direction_valid": true,
+      "Rstar_definition_selected_in_fold": false,
+      "Fs_refitted_inside_outer_fold": true,
+      "Rstar_calibration_refitted_inside_outer_fold": true
+    },
+    {
+      "outer_fold": 5,
+      "fit_epochs": 211,
+      "validation_epochs": 32,
+      "fit_subjects": 27,
+      "validation_subjects": 4,
+      "validation_groups": "Kumral:Sub-003|Kumral:Sub-015|Zhang:245|Zhang:411",
+      "selected_Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+      "selected_old_P_column": "recurrence_P_h0p5_tau0p08",
+      "selected_old_alpha": 1.0,
+      "Rstar_nonwake_anchor": -0.0921082459390163,
+      "Rstar_wake_anchor": 0.030740266200154947,
+      "Rstar_anchor_gap": 0.12284851213917125,
+      "Rstar_beta_fixed": 0.25,
+      "Rstar_direction_valid": true,
+      "Rstar_definition_selected_in_fold": false,
+      "Fs_refitted_inside_outer_fold": true,
+      "Rstar_calibration_refitted_inside_outer_fold": true
+    },
+    {
+      "outer_fold": "final_full_train",
+      "fit_epochs": 243,
+      "validation_epochs": 0,
+      "fit_subjects": 31,
+      "validation_subjects": 0,
+      "validation_groups": "",
+      "selected_Fs_candidate": "gamma_median_persistence__long_d9p5__short_d0p75",
+      "selected_old_P_column": "recurrence_P_h0p5_tau0p08",
+      "selected_old_alpha": 1.0,
+      "Rstar_nonwake_anchor": -0.09650388825684782,
+      "Rstar_wake_anchor": 0.018992106430232473,
+      "Rstar_anchor_gap": 0.11549599468708029,
+      "Rstar_beta_fixed": 0.25,
+      "Rstar_direction_valid": true,
+      "Rstar_definition_selected_in_fold": false,
+      "Fs_refitted_inside_outer_fold": true,
+      "Rstar_calibration_refitted_inside_outer_fold": true
+    }
+  ]
+}
